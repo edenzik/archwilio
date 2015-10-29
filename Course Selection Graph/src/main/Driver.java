@@ -80,7 +80,8 @@ public class Driver {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println("usage: test with start semester in 2010 or later");
+        System.out.println("usage: Java Driver config.json requirement.json");
+        System.out.println("Note: test with start semester in 2010 or later (modify in config.json)");
         long start = System.currentTimeMillis();
         String configFileName = args[0];
         BufferedReader br = new BufferedReader(new FileReader(configFileName));
