@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "root",
+    "username": "cosi228_development",
     "password": null,
-    "database": "database_development",
+    "database": "cosi228_development",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgresql"
   },
   "test": {
     "username": "root",
     "password": null,
-    "database": "database_test",
+    "database": "cosi228_test",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgresql"
   },
   "production": {
     "username": "root",
     "password": null,
-    "database": "database_production",
+    "database": "cosi228_production",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgresql"
   }
 }
