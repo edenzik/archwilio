@@ -17,9 +17,15 @@ public class Status {
     public boolean isGoal;  // if the vertex is a goal vertex
     public Set<Status> fathers;  // vertices leading to this vertex
     public int min;  // min # of courses the student has to take this semester in order to complete the major
-    public boolean safe_checked;  // if the vertex is already checked by safe pruning stragety
+    public boolean time_checked;  // if the vertex is already checked by completion time pruning strategy
+    public boolean availability_checked;  // if the vertex is already checked by courses availability pruning strategy
     public boolean radical_checked;
     public boolean on_path_to_goal;  // if the vertex is on any path to goals
+    public int left;  // what is the min # of courses left to take in order to reach a goal
+    public int left_A;  // what is the min # of courses left to take in order to complete group A
+    public int left_B;  // what is the min # of courses left to take in order to complete group B
+    public int left_C;  // what is the min # of courses left to take in order to complete group C
+    public int cost;  // the cost of the node could be the distance from start, or other defined scoring function
 
     public Status(ArrayList<String> enrolled, Semester semester) {
         this.enrolled = new ArrayList<>(enrolled);
@@ -27,11 +33,14 @@ public class Status {
         this.options = new ArrayList<>();
         this.adj = new ArrayList<>();
         this.cal_options();
+        this.left = this.left();
         this.isGoal = isFinished();
         this.fathers = new HashSet<>();
         this.min = Integer.MIN_VALUE;
-        this.safe_checked = false;
+        this.time_checked = false;
+        this.availability_checked = false;
         this.radical_checked = false;
+        this.cost = this.semester.subtract(Global.start);
     }
 
     /**
@@ -52,9 +61,7 @@ public class Status {
             return false;
         temp = new ArrayList<>(this.enrolled);
         temp.retainAll(Requirement.group_C);
-        if (temp.size() < Requirement.C_number)  // # of courses of group C taken
-            return false;
-        return true;
+        return temp.size() >= Requirement.C_number;  // # of courses of group C taken
     }
 
     /**
@@ -101,6 +108,9 @@ public class Status {
         count_rest += temp.size();
         needed_rest = Requirement.total_number - Requirement.A_number - Requirement.B_number - Requirement.C_number - count_rest;
         needed_rest = needed_rest > 0?needed_rest:0;
+        this.left_A = needed_a;
+        this.left_B = needed_b;
+        this.left_C = needed_c;
         return needed_a + needed_b + needed_c + needed_rest;
     }
 

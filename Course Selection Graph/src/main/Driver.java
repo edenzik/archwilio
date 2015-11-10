@@ -81,17 +81,17 @@ public class Driver {
 
     public static void main(String[] args) throws Exception {
         System.out.println("usage: Java Driver config.json requirement.json");
-        System.out.println("Note: test with start semester in 2010 or later (modify in config.json)");
-        long start = System.currentTimeMillis();
+        System.out.println("Note: test with start semester in 2010 or later (to change, go to config.json)");
+        //long start = System.currentTimeMillis();
         String configFileName = args[0];
         BufferedReader br = new BufferedReader(new FileReader(configFileName));
-        JSONTokener tokener = new JSONTokener(br);
-        JSONObject config = new JSONObject(tokener);
+        JSONTokener token = new JSONTokener(br);
+        JSONObject config = new JSONObject(token);
 
         String configFileName1 = args[1];
         BufferedReader br1 = new BufferedReader(new FileReader(configFileName1));
-        JSONTokener tokener1 = new JSONTokener(br1);
-        JSONObject requirement = new JSONObject(tokener1);
+        JSONTokener token1 = new JSONTokener(br1);
+        JSONObject requirement = new JSONObject(token1);
 
         new Global(config);
         new Requirement(requirement);
@@ -102,13 +102,23 @@ public class Driver {
 
         g.constructGraph(source);  // graph construction happens here
 
-        System.out.println("construction done");
+        System.out.println("searching done");
+        /*System.out.println("# to be pruned nodes: " + Global.to_be_pruned.size());
+        System.out.println("time pruned: " + Global.time_pruned);
+        System.out.println("ava pruned: " + Global.ava_pruned);
         clean_up();  // delete unwanted nodes and edges
         System.out.println("clean up done");
         long end = System.currentTimeMillis();
         System.out.println("running time: " + (end-start)/1000 + " seconds");
 
         count_path(source);
-        System.out.println("total path: " + total_path);
+        System.out.println("total path: " + total_path);*/
+
+        int count = 1;
+        for (Path p: Global.top_k) {
+            System.out.println("Path " + count++);
+            System.out.println(p);
+            System.out.println("-----");
+        }
     }
 }
