@@ -7,7 +7,7 @@ ClassPathExploration.controller('Course', function ($scope, $http) {
     {'name': 'Software entrpreneurship'}*/
 
     // change the address below 
-    $http.get('http://localhost/courses.json').success(function(data) {
+    $http.get('/courses').success(function(data) {
     $scope.courses = data;
   });
 });
