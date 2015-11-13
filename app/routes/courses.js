@@ -1,16 +1,29 @@
 var express = require('express');
 var models  = require('../models');
 var router = express.Router();
+var sequelize = models.sequelize
 
-/* GET courses listing. */
 router.get('/', function(req, res) {
-  models.course.findAll({limit: 10}).then(function(courses) {
+  models.course.findAll(
+    { limit: 1000,
+      attributes: [
+        'code', 'name', 'term', 'description', 
+        sequelize.fn('count', sequelize.col('id'))], 
+      where: {
+        code: {
+          $like: 'COSI%'
+        },
+        term: {
+          $gte: '1152'
+        }
+      },
+      group: ['code', 'name', 'term', 'description'],
+      order: 'name ASC'
+    }).then(function(courses) {
+
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(courses));
   });
-
-  // res.setHeader('Content-Type', 'application/json');
-  // res.send(JSON.stringify({}));
 });
 
 module.exports = router;
