@@ -1,9 +1,6 @@
 package input;
 
-import main.Decision;
-import main.ScheduleConstructor;
-import main.Semester;
-import main.Status;
+import main.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.*;
@@ -36,23 +33,36 @@ public class Global {
     public static Semester start;  // start semester
     public static Semester deadline;  // graduation semester
 
-    public static boolean safe_pruning;  // switch of safe pruning strategy
+    public static boolean time_pruning;  // switch of completion time pruning strategy
+    public static boolean availability_pruning;  // switch of course availability pruning strategy
     public static boolean radical_pruning;
 
+    public static int time_pruned;
+    public static int ava_pruned;
+
+    public static ArrayList<Path> top_k;  // top k paths
+    public static int k;  // the k in top k
+
     public Global(JSONObject config) throws Exception {
+        time_pruned = 0;
+        ava_pruned = 0;
         all_courses = new ArrayList<>();
         all_decisions = new ArrayList<>();
         constructed_nodes = new HashSet<>();
         to_be_pruned = new LinkedList<>();
         existing_node = new HashMap<>();
+        top_k = new ArrayList<>();
 
         JSONObject edu = config.getJSONObject("education");
         JSONObject algo = config.getJSONObject("algorithm");
 
+        k = algo.getInt("k");
+
         start = new Semester(edu.getInt("start_year"), edu.getString("start_term"));
         deadline = new Semester(edu.getInt("end_year"), edu.getString("end_term"));
 
-        safe_pruning = algo.getBoolean("safe_pruning");
+        time_pruning = algo.getBoolean("time_pruning");
+        availability_pruning = algo.getBoolean("availability_pruning");
         radical_pruning = algo.getBoolean("radical_pruning");
 
         JSONArray courses_info = config.getJSONArray("courses");

@@ -1,0 +1,9 @@
+Database Directory
+=================
+- Makefile: recipies to load the database
+- data/enrollment/*.csv - Directory containing enrollment for 2008 - 2015
+- data/schedule.json - file containing all courses and instructors
+- data/degrees.csv - file containing all majors-minors-completed for 2008 - 2015
+- README - this file
+- initialize.sql - SQL script needed to set up the database
+

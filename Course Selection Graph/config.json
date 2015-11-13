@@ -1,14 +1,16 @@
 {
     "algorithm": {
-        "safe_pruning": true,
-        "radical_pruning": false
+        "time_pruning": true,
+        "radical_pruning": false,
+        "availability_pruning": true,
+        "k": 10
     },
     "education": {
         "max_courses_per_semester": 3,
-        "start_year": 2012,
+        "start_year": 2010,
         "start_term": "Fall",
-        "end_year": 2015,
-        "end_term": "Spring"
+        "end_year": 2014,
+        "end_term": "Fall"
     },
     "courses":
     [{"code":"11A", "term": ['Spring2005', 'Fall2005', 'Fall2006', 'Fall2007', 'Fall2008',  'Fall2009',  'Fall2010', 'Fall2011', 'Fall2012',  'Fall2013',   'Fall2014', 'Fall2015'], "prerequisite":[]},
