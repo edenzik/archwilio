@@ -4,10 +4,13 @@ var router = express.Router();
 
 /* GET courses listing. */
 router.get('/', function(req, res) {
-  models.Course.findAll({}).then(function(courses) {
+  models.course.findAll({limit: 10}).then(function(courses) {
     res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify(courses));
-    });
+    res.send(JSON.stringify(courses));
+  });
+
+  // res.setHeader('Content-Type', 'application/json');
+  // res.send(JSON.stringify({}));
 });
 
 module.exports = router;
