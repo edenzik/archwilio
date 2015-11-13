@@ -1,0 +1,59 @@
+data:[{/*status 1, means in this semester choose which courses*/
+	"id": 1,
+	"year":2015,
+	"semester":"spring",
+	"course_list": [
+		{
+			"course_name": "distributed system",
+			"prerequisites": "BIOL 22a and BIOL 22b",
+			"description":  "lorem ipsum",
+			"professor": "olga",
+			"Location": "xxxxx",
+			"time": "w,h 12:30-14:00"
+		},
+		{
+			"course_name": "xxxxxxxx",
+			"prerequisites": "BIOL 22a and BIOL 22b",
+			"description":  "lorem ipsum",
+			"professor": "olga",
+			"Location": "xxxxx",
+			"time": "w,h 12:30-14:00"
+		},
+
+
+
+	]		
+},
+{/*status 2, means in this semester choose which courses*/
+	"id": 2,
+	"year":2015,
+	"semester":"fall",
+	"course_list": [
+		{
+			"course_name": "distributed system",
+			"prerequisites": "BIOL 22a and BIOL 22b",
+			"description":  "lorem ipsum",
+			"professor": "olga",
+			"Location": "xxxxx",
+			"time": "w,h 12:30-14:00"
+		},
+		{
+			"course_name": "xxxxxxxx",
+			"prerequisites": "BIOL 22a and BIOL 22b",
+			"description":  "lorem ipsum",
+			"professor": "olga",
+			"Location": "xxxxx",
+			"time": "w,h 12:30-14:00"
+		},
+		{
+			"course_name": "xxxxxxxx",
+			"prerequisites": "BIOL 22a and BIOL 22b",
+			"description":  "lorem ipsum",
+			"professor": "olga",
+			"Location": "xxxxx",
+			"time": "w,h 12:30-14:00"
+		},
+	]		
+}]
+
+
