@@ -6,11 +6,6 @@ var ClassPathExploration = angular.module('ClassPathExploration', ['ui.bootstrap
     {'name': 'Mobile application'},
     {'name': 'Software entrpreneurship'}*/
 
-   /* // change the address below 
-    $http.get('http://localhost/courses.json').success(function(data) {
-    $scope.courses = data;
-  });
-});*/
 
 ClassPathExploration.controller('CourseCtrl', function ($scope, $http, $modal, $log) {
     //$scope.animationsEnabled = true;

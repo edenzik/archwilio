@@ -115,6 +115,10 @@ CREATE TABLE course AS
     FROM dump 
     WHERE data->>'type'='course'
 );
+ALTER TABLE course ADD COLUMN "createdAt" TIMESTAMP;
+UPDATE course SET "createdAt" = NOW();
+ALTER TABLE course ADD COLUMN "updatedAt" TIMESTAMP;
+UPDATE course SET "updatedAt" = NOW();
 
 CREATE TABLE course_requirement AS
 (
