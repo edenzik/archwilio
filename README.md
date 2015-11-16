@@ -20,5 +20,5 @@
 - `cd app`
 - `npm install`
 - `start postgres`
-- `npm start`
+- `./bin/www`
 - visit localhost:3000
