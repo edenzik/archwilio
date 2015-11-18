@@ -80,8 +80,8 @@ body {
  */
 
 .main {
-  width: 1440px;
-  height: 900px;
+  width: 2880px;
+  height: 1800px;
 }
 
 .nav{
@@ -219,6 +219,65 @@ a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, 
   color: #3b3b3b;
 }
 
+.recommend_course_info{
+  margin-left: 40px;
+  padding-top: -10px;
+}
 
 
+.panel-default {
+    border-color: black !important;
+}
+.panel-heading { 
+  color: #dce3e8;
+  background-color: #1b2024;
+  padding: 12px;
+}
+.panel-group .panel-heading+.panel-collapse .panel-body {
+    color: #dce3e8;
+    background-color: #1b2024;
+    padding: 0;
+    border-radius: 0px;
+    border: 0px;
+}
+.panel-default>.panel-heading{
+  color:#dce3e8;
+  background-color: #000;
+  padding: 18px;
+  border-top: 1px solid #3b3b3b;
+  border-radius: 0px;
+}
+.panel-default>.panel-heading:hover{
+  background: #1b2024;
+  color:#dce3e8;
+}
+.panel {
+  border: 0px;
+}
 
+.col-md-9 {
+  padding: 0px;
+}
+.split{
+  height: 10px;
+  width: 100%;
+  border-bottom: 1px solid #dce3e8;
+  margin-bottom: 10px;
+
+}
+
+.modal_template{
+  font-family: "Source Sans Pro","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+  line-height: 1.42857;
+  color: #1b2024;
+  font-size: 13px;
+}
+
+.checkbox{
+  display: inline-block;
+  margin-left: 80px;
+  font-weight: normal;
+}
+fieldset { overflow:hidden }
+
+input[type=radio], input.radio { clear:none; margin: 2px 0 0 2px; font-weight: normal;}

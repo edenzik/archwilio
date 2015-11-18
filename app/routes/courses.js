@@ -7,7 +7,7 @@ router.get('/', function(req, res) {
   models.course.findAll(
     { limit: 1000,
       attributes: [
-        'code', 'name', 'term', 'description', 
+        'instance_id', 'code', 'name', 'term', 'description', 
         sequelize.fn('count', sequelize.col('id'))], 
       where: {
         code: {
@@ -17,7 +17,7 @@ router.get('/', function(req, res) {
           $gte: '1152'
         }
       },
-      group: ['code', 'name', 'term', 'description'],
+      group: ['code', 'name', 'term', 'description', 'instance_id'],
       order: 'name ASC'
     }).then(function(courses) {
 

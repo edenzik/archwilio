@@ -30,7 +30,7 @@
     <![endif]-->
   </head>
 
-  <body >
+  <body>
     <!--[if lt IE 9]>
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
@@ -65,7 +65,7 @@
               <!-- Nav tabs -->
               <ul class="nav nav-tabs" role="tablist">
                 <li role="info" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Info</a></li>
-                <li role="exploration"><a href="#exploration" aria-controls="exploration" role="tab" data-toggle="tab">Exploration</a></li>
+                <li role="exploration"><a href="#exploration" aria-controls="exploration" role="tab" data-toggle="tab">Training</a></li>
                 <li role="recommendation"><a href="#recommendation" aria-controls="recommendation" role="tab" data-toggle="tab">Recommend</a></li>
                 
               </ul>
@@ -100,21 +100,116 @@
                       <script type="text/ng-template" id="myModalContent.html">
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <h4 class="modal-title" id="course_name">{{course.name}}</h4>
+                          <h4 class="modal-title" id="course_name">{{course.id}}:{{course.name}}</h4>
                         </div>
-                        <div class="modal-body">
-                          ...
+                        <div class="modal-body modal_template">
+                          <div>
+                            <label style="font-weight:normal">Prerequisites:{{course.prerequisites}}<label>
+                            <div class="split"></div>
+                            <p style="font-weight:normal">{{course.description}}</p>
+                            <label style="font-weight:normal">Professor: {{course.professor}}</label>
+                            <label style="font-weight:normal; margin-left: 100px;">{{course.location}}</label>
+                            <label style="font-weight:normal; margin-left: 100px;">{{course.time}}</label>
+                            <div class="split"></div>
+                            <div>
+                              <label style="font-weight:normal">Do you like it? </label>
+                              <fieldset>
+                              <div class="some-class">
+                                <input type="radio" class="radio" name="x" value="yes" id="yes"/>
+                                <label style="font-weight:normal">Yes</label>
+                                <input type="radio" class="radio" name="x" value="no" id="no"/>
+                                <label style="font-weight:normal;">No</label>
+                              </div>
+                              </fieldset>
+                            </div>
+                            <div>
+                              <label style="font-weight:normal"> If yes, why? <label>
+                              <div class="checkbox">
+                                  <input type="checkbox">lots of math</div>
+                              <div class="checkbox">
+                                  <input type="checkbox">professor is good</div>
+                              <div class="checkbox">
+                                  <input type="checkbox">xxxx</div>
+                            </div>
+                            <div>
+                              <label style="font-weight:normal"> If not, why? <label>
+                              <div class="checkbox">
+                                  <input type="checkbox">bad time</div>
+                              <div class="checkbox">
+                                  <input type="checkbox">xxx</div>
+                              <div class="checkbox">
+                                  <input type="checkbox">xxxx</div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-info">Confirm</button>
+                          <button 
+                            type="button" 
+                            class="btn btn-info"
+                            ng-click='train()'>
+
+                            Confirm
+                          </button>
                         </div>
                       </script>
                     </div>             
                   </div>
                   <button type="button" class="btn btn-info" id="start_exploration_btn">Start Exploration</button>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="recommendation">...</div>
+                <div role="tabpanel" class="tab-pane" id="recommendation">
+                  <div class="nav nav-sidebar tag_class">
+                      <div class="list-group">
+                        <accordion close-others="oneAtATime">
+                        <accordion-group heading="#1 Recommended Course Path" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                        <a class="list-group-item recommend">
+                          <label class="list-table">2015 Fall</label>
+                          <div>
+                            <p class="info_text recommend_course_info">cosi11</p>
+                            <p class="info_text recommend_course_info">cosi12</p>
+                            <p class="info_text recommend_course_info">cosi13</p>
+                            <p class="info_text recommend_course_info">cosi14</p>
+                          </div>
+                          <label class="list-table">2016 Spring</label>
+                          <div>
+                            <p class="info_text recommend_course_info">cosi21</p>
+                            <p class="info_text recommend_course_info">cosi22</p>
+                            <p class="info_text recommend_course_info">cosi23</p>
+                            <p class="info_text recommend_course_info">cosi24</p>
+                          </div>
+                        </a>
+                        </accordion-group>
+                        <a class="list-group-item">
+                          <h4>#2 Recommended Course Path</h4>
+                          <label class="list-table">2015 Fall</label>
+                          <div>
+                            <p class="info_text recommend_course_info">cosi31</p>
+                            <p class="info_text recommend_course_info">cosi32</p>
+                            <p class="info_text recommend_course_info">cosi33</p>
+                            <p class="info_text recommend_course_info">cosi34</p>
+                          </div>
+                          <label class="list-table">2016 Spring</label>
+                          <div>
+                            <p class="info_text recommend_course_info">cosi41</p>
+                            <p class="info_text recommend_course_info">cosi42</p>
+                            <p class="info_text recommend_course_info">cosi43</p>
+                            <p class="info_text recommend_course_info">cosi44</p>
+                          </div>
+                        </a>
+                        <div class="list-group-item">
+                          <label>...</label>
+                        </div> 
+                        </accordion> 
+                      
+                    
+                      </div>             
+                  </div>
+
+
+
+
+                </div>
               </div>
             </div>
           </div>
@@ -130,25 +225,7 @@
     </div>
     <div class="toolbar">
       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="modal" data-target="#support"></span>&nbsp;&nbsp;&nbsp;&nbsp; 
-      <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-    </div>
-
-    <div class="modal fade" id="rank_class" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="course_name">Distributed system</h4>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-info">Confirm</button>
-          </div>
-        </div>
-      </div>
+      <span class="glyphicon glyphicon-fullscreen" aria-hidden="true" onclick="fullscreen()"></span>
     </div>
 
     <div class="modal fade" id="support" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -159,7 +236,9 @@
             <h4 class="modal-title">Contact</h4>
           </div>
           <div class="modal-body">
-            ...
+            <div>            
+                
+            </div>
           </div>
         </div>
       </div>
@@ -209,6 +288,22 @@
         allNodes = nodesDataset.get({returnType:"Object"});
       }
       redrawALL();
+
+      function fullscreen(){
+        var docElm = document.documentElement;
+if (docElm.requestFullscreen) {
+    docElm.requestFullscreen();
+}
+else if (docElm.mozRequestFullScreen) {
+    docElm.mozRequestFullScreen();
+}
+else if (docElm.webkitRequestFullScreen) {
+    docElm.webkitRequestFullScreen();
+}
+else if (docElm.msRequestFullscreen) {
+    docElm.msRequestFullscreen();
+}
+      }
 
     </script>
 
