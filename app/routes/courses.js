@@ -26,4 +26,23 @@ router.get('/', function(req, res) {
   });
 });
 
+router.post('/train', function(req, res) {
+  var instance_id = req.body.instance_id,
+      rating = 0.8;
+
+  models.course.findOne({ limit: 1,
+      attributes: ['instance_id', 'code', 'name', 'term', 'description'],
+      where: {instance_id: instance_id}
+    }).then(function(course) {
+      console.log(instance_id);
+      console.log(rating);
+      
+      console.log(course.dataValues.description);
+      console.log(course.dataValues.code);
+      console.log(course.dataValues.name);
+    });
+
+
+});
+
 module.exports = router;
