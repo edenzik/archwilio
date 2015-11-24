@@ -4,9 +4,11 @@ import input.Global;
 import input.Requirement;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Queue;
 
 /**
  * Created by zhan on 7/30/15.
@@ -46,16 +48,20 @@ public class Driver {
      * count total number of paths
      * @param node
      */
-    public static void count_path(Status node) {
+    public static void count_path(Status node, Path p, Queue<Path> paths) {
         if (node == null) {
             return;
         }
         if (node.isGoal) {
             total_path += 1;
+            p.calCost();
+            paths.add(new Path(p));
             return;
         }
         for (Decision d : node.adj) {
-            count_path(d.to());
+            p.add(d.to());
+            count_path(d.to(), p, paths);
+            p.removeLat();
         }
     }
 
@@ -80,9 +86,7 @@ public class Driver {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println("usage: Java Driver config.json requirement.json");
         System.out.println("Note: test with start semester in 2010 or later (to change, go to config.json)");
-        //long start = System.currentTimeMillis();
         String configFileName = args[0];
         BufferedReader br = new BufferedReader(new FileReader(configFileName));
         JSONTokener token = new JSONTokener(br);
@@ -99,26 +103,36 @@ public class Driver {
         Status source = new Status(new ArrayList<>(), Global.start);
 
         CourseSelectionGraph g = new CourseSelectionGraph();
-
+        long start = System.currentTimeMillis();
         g.constructGraph(source);  // graph construction happens here
-
         System.out.println("searching done");
+
         /*System.out.println("# to be pruned nodes: " + Global.to_be_pruned.size());
         System.out.println("time pruned: " + Global.time_pruned);
-        System.out.println("ava pruned: " + Global.ava_pruned);
+        System.out.println("ava pruned: " + Global.ava_pruned);*/
         clean_up();  // delete unwanted nodes and edges
         System.out.println("clean up done");
-        long end = System.currentTimeMillis();
-        System.out.println("running time: " + (end-start)/1000 + " seconds");
 
-        count_path(source);
-        System.out.println("total path: " + total_path);*/
+        Queue<Path> paths = Global.allPaths;
+        Path p = new Path();
+        p.add(source);
+        count_path(source, p, paths);
+        long end = System.currentTimeMillis();
+        System.out.println("time for whole graph construction : " + (end - start) + "ms");
+        System.out.println("number of all nodes: " + Global.constructed_nodes.size());
+        System.out.println("number of all paths: " + Global.allPaths.size());
+        System.out.println("------");
+
+        start = System.currentTimeMillis();
+        g.constructShortest(source);
+        end = System.currentTimeMillis();
+        System.out.println("time for constructing shortest " + Global.k + " paths : " + (end - start) + "ms");
 
         int count = 1;
-        for (Path p: Global.top_k) {
-            System.out.println("Path " + count++);
-            System.out.println(p);
-            System.out.println("-----");
+        for (Path pt: Global.top_k) {
+            System.out.println("Path " + count + ": ");
+            System.out.println(pt);
         }
+
     }
 }

@@ -16,7 +16,7 @@ public class Prerequisite {
 
     /**
      * Initialize a directed graph from input
-     * @param input
+     * @param input in the format of "#nodes #edges v1 u1 v2 u2 ..."
      */
     public Prerequisite(String input) {
         String[] lines = input.split("\\s+");
