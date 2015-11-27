@@ -8,7 +8,7 @@ body {
   font-size: 16px;
   line-height: 1.42857;
   color: #dce3e8;
-  background-color: #1b2024;
+  background-color: #1b2024;f
 }
 
 
@@ -72,7 +72,6 @@ body {
   background-color: #428bca;
 }
 .nav-sidebar-all {
-  margin-top: 150px;
 }
 
 /*
@@ -133,8 +132,8 @@ h4 h5 {
 }
 
 .tag_class{
-  min-height: 480px;
-  max-height: 800px;
+  min-height: 280px;
+  max-height: 700px;
   overflow-y: auto;
 }
 
@@ -281,3 +280,7 @@ a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, 
 fieldset { overflow:hidden }
 
 input[type=radio], input.radio { clear:none; margin: 2px 0 0 2px; font-weight: normal;}
+
+.project_info{
+  height: 100px;
+}
