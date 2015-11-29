@@ -9,8 +9,8 @@
         "max_courses_per_semester": 3,
         "start_year": 2010,
         "start_term": "Fall",
-        "end_year": 2014,
-        "end_term": "Fall"
+        "end_year": 2013,
+        "end_term": "Spring"
     },
     "courses":
     [{"code":"11A", "term": ['Spring2005', 'Fall2005', 'Fall2006', 'Fall2007', 'Fall2008',  'Fall2009',  'Fall2010', 'Fall2011', 'Fall2012',  'Fall2013',   'Fall2014', 'Fall2015'], "prerequisite":[]},

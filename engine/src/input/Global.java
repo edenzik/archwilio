@@ -42,6 +42,8 @@ public class Global {
 
     public static ArrayList<Path> top_k;  // top k paths
     public static int k;  // the k in top k
+    public static Queue<Path> allPaths;
+
 
     public Global(JSONObject config) throws Exception {
         time_pruned = 0;
@@ -52,6 +54,7 @@ public class Global {
         to_be_pruned = new LinkedList<>();
         existing_node = new HashMap<>();
         top_k = new ArrayList<>();
+        allPaths = new PriorityQueue<>();
 
         JSONObject edu = config.getJSONObject("education");
         JSONObject algo = config.getJSONObject("algorithm");

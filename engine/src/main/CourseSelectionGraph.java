@@ -111,7 +111,7 @@ public class CourseSelectionGraph {
      * @param pathPriorityQueue queue which stores top k path
      * @return the new edge
      */
-    public Decision makeDecision(Status next, Status cur, Path cur_p, PriorityQueue<Path> pathPriorityQueue) {
+    public Decision makeDecision(Status next, Status cur, Path cur_p, Queue<Path> pathPriorityQueue) {
         Decision decision;
         if (Global.existing_node.containsKey(next.hashCode())) {
             Status node = Global.existing_node.get(next.hashCode());
@@ -119,7 +119,7 @@ public class CourseSelectionGraph {
             node.fathers.add(cur);
             Path next_p = new Path(cur_p);
             next_p.add(node);
-            next_p.cal_cost();
+            next_p.calCost();
             pathPriorityQueue.offer(next_p);
         } else {
             Global.existing_node.put(next.hashCode(), next);
@@ -129,24 +129,41 @@ public class CourseSelectionGraph {
             next.fathers.add(cur);
             Path next_p = new Path(cur_p);
             next_p.add(next);
-            next_p.cal_cost();
+            next_p.calCost();
             pathPriorityQueue.offer(next_p);
         }
         return decision;
     }
 
-    public void constructGraph(Status source) {
+    public Decision makeDecision(Status next, Status cur, Queue<Status> q) {
+        Decision decision;
+        if (Global.existing_node.containsKey(next.hashCode())) {
+            Status node = Global.existing_node.get(next.hashCode());
+            decision = new Decision(cur, node, 1);
+            node.fathers.add(cur);
+        } else {
+            Global.existing_node.put(next.hashCode(), next);
+            q.offer(next);
+            Global.constructed_nodes.add(next);
+            decision = new Decision(cur, next, 1);
+            next.fathers.add(cur);
+        }
+        return decision;
+    }
+
+    /**
+     * construct shortest paths
+     * @param source start status
+     */
+    public void constructShortest(Status source) {
         System.out.println("start searching for top " + Global.k + " shortest learning paths from semester " + Global.start + " to semester " + Global.deadline + "...");
-        //Queue<Status> q = new LinkedList<>();
-        //q.offer(source);
-        PriorityQueue<Path> pathPriorityQueue = new PriorityQueue<>();
+
+        Queue<Path> pathPriorityQueue = new PriorityQueue<>();
         Path p = new Path();
         p.add(source);
-        p.cal_cost();
+        p.calCost();
         pathPriorityQueue.offer(p);
-        Global.constructed_nodes.add(source);
         while (!pathPriorityQueue.isEmpty()) {
-            //Status cur = q.poll();
             Path cur_p = pathPriorityQueue.poll();
             Status cur = cur_p.getLast();
 
@@ -157,6 +174,63 @@ public class CourseSelectionGraph {
                     System.out.println("top " + Global.k + " paths are found!");
                     return;
                 }
+                continue;
+            }
+
+            // if reach deadline, stop
+            if (cur.semester.equals(Global.deadline)) {
+                continue;
+            }
+
+            // completion time pruning
+            if (Global.time_pruning && !cur.time_checked) {
+                if (time_pruning(cur)) {
+                    continue;
+                }
+            }
+
+            // courses availability pruning
+            if (Global.availability_pruning && !cur.availability_checked) {
+                if (availability_pruning(cur)) {
+                    continue;
+                }
+            }
+
+            Set<List<String>> permutations = cur.cal_adj();  // compute all courses combinations
+            if (permutations.size() == 0) {  // no courses eligible to take in the current semester
+                Status next = new Status(cur.enrolled, cur.semester.next_semester());
+                Decision decision = makeDecision(next, cur, cur_p, pathPriorityQueue);
+                cur.adj.add(decision);
+            }
+            for (List<String> list : permutations) {
+                // this semester has to take cur.min courses
+                if ((Global.time_pruning) && list.size() < cur.min)
+                    continue;
+                ArrayList<String> enrolled = new ArrayList<>(cur.enrolled);
+                enrolled.addAll(list);  // the student takes all courses in the list
+                Semester semester = cur.semester.next_semester();
+                Status next = new Status(enrolled, semester);  // create next status
+                Decision decision = makeDecision(next, cur, cur_p, pathPriorityQueue);
+                cur.adj.add(decision);
+            }
+        }
+    }
+
+    /**
+     * construct the course selection graph
+     * @param source start status
+     */
+    public void constructGraph(Status source) {
+        System.out.println("start constructing graph from semester " + Global.start + " to semester " + Global.deadline + "...");
+        Queue<Status> q = new LinkedList<>();
+        q.offer(source);
+
+        Global.constructed_nodes.add(source);
+        while (!q.isEmpty()) {
+            Status cur = q.poll();
+
+            // if major requirement is satisfied, stop
+            if (cur.isGoal) {
                 continue;
             }
 
@@ -185,7 +259,7 @@ public class CourseSelectionGraph {
             Set<List<String>> permutations = cur.cal_adj();  // compute all courses combinations
             if (permutations.size() == 0) {  // no courses eligible to take in the current semester
                 Status next = new Status(cur.enrolled, cur.semester.next_semester());
-                Decision decision = makeDecision(next, cur, cur_p, pathPriorityQueue);
+                Decision decision = makeDecision(next, cur, q);
                 cur.adj.add(decision);
             }
             for (List<String> list : permutations) {
@@ -196,11 +270,12 @@ public class CourseSelectionGraph {
                 enrolled.addAll(list);  // the student takes all courses in the list
                 Semester semester = cur.semester.next_semester();
                 Status next = new Status(enrolled, semester);  // create next status
-                Decision decision = makeDecision(next, cur, cur_p, pathPriorityQueue);
+                Decision decision = makeDecision(next, cur, q);
                 cur.adj.add(decision);
             }
         }
     }
+
 
     public void displayGraph(Status source) {
         for (Decision d : source.adj) {

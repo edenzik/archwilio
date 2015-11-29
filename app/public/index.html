@@ -23,6 +23,7 @@
     <script src="visdist/vis.js"></script>
     <!-- resources -->
     <script src="js/WorldCup2014.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -59,6 +60,9 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-3 sidebar">
+          <div class="project_info">
+            <h4>Course selection project</h4>
+          </div>
           <div class="nav-sidebar-all">
             <div>
 
@@ -96,51 +100,55 @@
                 <div role="tabpanel" class="tab-pane" id="exploration">
                   <div class="nav nav-sidebar tag_class" >
                     <div class="list-group" ng-controller="CourseCtrl">
-                      <a href="#" class="list-group-item" ng-click="open(course,'lg')" ng-repeat="course in courses">{{course.name}}<span class="badge">Tagged</span></a>
+                      <a href="#" class="list-group-item" ng-click="open(course,'lg')" ng-repeat="course in courses">{{course.name}}<span class="badge">T</span></a>
                       <script type="text/ng-template" id="myModalContent.html">
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <h4 class="modal-title" id="course_name">{{course.id}}:{{course.name}}</h4>
+                          <h4 class="modal-title" id="course_name">{{course.code}}:{{course.name}}</h4>
                         </div>
                         <div class="modal-body modal_template">
                           <div>
-                            <label style="font-weight:normal">Prerequisites:{{course.prerequisites}}<label>
-                            <div class="split"></div>
+                            
                             <p style="font-weight:normal">{{course.description}}</p>
-                            <label style="font-weight:normal">Professor: {{course.professor}}</label>
+                            <label style="font-weight:normal">Term: {{course.term}}</label>
                             <label style="font-weight:normal; margin-left: 100px;">{{course.location}}</label>
                             <label style="font-weight:normal; margin-left: 100px;">{{course.time}}</label>
                             <div class="split"></div>
                             <div>
                               <label style="font-weight:normal">Do you like it? </label>
-                              <fieldset>
+                              <form name="do_you_like_it">
                               <div class="some-class">
-                                <input type="radio" class="radio" name="x" value="yes" id="yes"/>
+                                <input type="radio" class="radio" name="x" value="1" id="yes"/>
                                 <label style="font-weight:normal">Yes</label>
-                                <input type="radio" class="radio" name="x" value="no" id="no"/>
+                                <input type="radio" class="radio" name="x" value="0" id="no"/>
                                 <label style="font-weight:normal;">No</label>
                               </div>
-                              </fieldset>
+                              </form>
                             </div>
-                            <div>
+                            <form name="whyyes">
+                            <div>    
                               <label style="font-weight:normal"> If yes, why? <label>
                               <div class="checkbox">
-                                  <input type="checkbox">lots of math</div>
+                                  <input type="checkbox" id="positive_reason_1">lots of math</div>
                               <div class="checkbox">
-                                  <input type="checkbox">professor is good</div>
+                                  <input type="checkbox" id="positive_reason_2">professor is good</div>
                               <div class="checkbox">
-                                  <input type="checkbox">xxxx</div>
+                                  <input type="checkbox" id="positive_reason_3">professor is good</div>
+                                  
                             </div>
+                            </form>
+                            <form id="whynot">
                             <div>
                               <label style="font-weight:normal"> If not, why? <label>
                               <div class="checkbox">
-                                  <input type="checkbox">bad time</div>
+                                  <input type="checkbox" id="negative_reason_1">bad time</div>
                               <div class="checkbox">
-                                  <input type="checkbox">xxx</div>
+                                  <input type="checkbox" id="negative_reason_2">xxx</div>
                               <div class="checkbox">
-                                  <input type="checkbox">xxxx</div>
+                                  <input type="checkbox" id="negative_reason_3">xxxx</div>
                               </div>
                             </div>
+                            </form>
                           </div>
                         </div>
                         <div class="modal-footer">
@@ -148,7 +156,7 @@
                           <button 
                             type="button" 
                             class="btn btn-info"
-                            ng-click='train()'>
+                            ng-click="train()">
 
                             Confirm
                           </button>
@@ -225,7 +233,8 @@
     </div>
     <div class="toolbar">
       <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="modal" data-target="#support"></span>&nbsp;&nbsp;&nbsp;&nbsp; 
-      <span class="glyphicon glyphicon-fullscreen" aria-hidden="true" onclick="fullscreen()"></span>
+      <span class="glyphicon glyphicon-fullscreen" aria-hidden="true" onclick="fullscreen()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+      <span class="glyphicon glyphicon-user" aria-hidden="true" onclick="window.location = 'login.html'"></span>
     </div>
 
     <div class="modal fade" id="support" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -291,26 +300,41 @@
 
       function fullscreen(){
         var docElm = document.documentElement;
-if (docElm.requestFullscreen) {
-    docElm.requestFullscreen();
-}
-else if (docElm.mozRequestFullScreen) {
-    docElm.mozRequestFullScreen();
-}
-else if (docElm.webkitRequestFullScreen) {
-    docElm.webkitRequestFullScreen();
-}
-else if (docElm.msRequestFullscreen) {
-    docElm.msRequestFullscreen();
-}
-      }
+        if (docElm.requestFullscreen) {
+            docElm.requestFullscreen();
+        }
+        else if (docElm.mozRequestFullScreen) {
+            docElm.mozRequestFullScreen();
+        }
+        else if (docElm.webkitRequestFullScreen) {
+            docElm.webkitRequestFullScreen();
+        }
+        else if (docElm.msRequestFullscreen) {
+            docElm.msRequestFullscreen();
+        }
+              }
+
+        /*function capture_value(){
+          alert(123);
+        }*/
+
+     /* document.getElementById("yes").addEventListener("click", function(){
+    alert(1234);
+    });*/
+   /* var radio_yes = document.getElementById('yes');
+    radio_yes.onclick = handler;
+
+    function handler() {
+      alert('clicked');
+    }*/
+
+
 
     </script>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>
