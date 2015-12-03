@@ -22,7 +22,7 @@
     <!-- Vis Js -->
     <script src="visdist/vis.js"></script>
     <!-- resources -->
-    <script src="js/WorldCup2014.js"></script>
+    <script src="js/example_courses.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -71,7 +71,7 @@
                 <li role="info" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Info</a></li>
                 <li role="exploration"><a href="#exploration" aria-controls="exploration" role="tab" data-toggle="tab">Training</a></li>
                 <li role="recommendation"><a href="#recommendation" aria-controls="recommendation" role="tab" data-toggle="tab">Recommend</a></li>
-                
+
               </ul>
               <!-- Tab panes -->
               <div class="tab-content">
@@ -90,11 +90,11 @@
                           <h4>Nodes Information</h4>
                           <label>...</label>
 
-                        </div> 
+                        </div>
                         <div class="list-group-item">
                           <label>...</label>
-                        </div>  
-                      </div>             
+                        </div>
+                      </div>
                   </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="exploration">
@@ -108,7 +108,7 @@
                         </div>
                         <div class="modal-body modal_template">
                           <div>
-                            
+
                             <p style="font-weight:normal">{{course.description}}</p>
                             <label style="font-weight:normal">Term: {{course.term}}</label>
                             <label style="font-weight:normal; margin-left: 100px;">{{course.location}}</label>
@@ -126,7 +126,7 @@
                               </form>
                             </div>
                             <form name="whyyes">
-                            <div>    
+                            <div>
                               <label style="font-weight:normal"> If yes, why? <label>
                               <div class="checkbox">
                                   <input type="checkbox" id="positive_reason_1">lots of math</div>
@@ -134,7 +134,7 @@
                                   <input type="checkbox" id="positive_reason_2">professor is good</div>
                               <div class="checkbox">
                                   <input type="checkbox" id="positive_reason_3">professor is good</div>
-                                  
+
                             </div>
                             </form>
                             <form id="whynot">
@@ -153,8 +153,8 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button 
-                            type="button" 
+                          <button
+                            type="button"
                             class="btn btn-info"
                             ng-click="train()">
 
@@ -162,7 +162,7 @@
                           </button>
                         </div>
                       </script>
-                    </div>             
+                    </div>
                   </div>
                   <button type="button" class="btn btn-info" id="start_exploration_btn">Start Exploration</button>
                 </div>
@@ -207,11 +207,11 @@
                         </a>
                         <div class="list-group-item">
                           <label>...</label>
-                        </div> 
-                        </accordion> 
-                      
-                    
-                      </div>             
+                        </div>
+                        </accordion>
+
+
+                      </div>
                   </div>
 
 
@@ -227,12 +227,12 @@
 
           <!--[if lt IE 9]>
           <h1 class="page-header">Your class path</h1>
-          <![endif]-->    
+          <![endif]-->
         </div>
       </div>
     </div>
     <div class="toolbar">
-      <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="modal" data-target="#support"></span>&nbsp;&nbsp;&nbsp;&nbsp; 
+      <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="modal" data-target="#support"></span>&nbsp;&nbsp;&nbsp;&nbsp;
       <span class="glyphicon glyphicon-fullscreen" aria-hidden="true" onclick="fullscreen()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
       <span class="glyphicon glyphicon-user" aria-hidden="true" onclick="window.location = 'login.html'"></span>
     </div>
@@ -245,8 +245,8 @@
             <h4 class="modal-title">Contact</h4>
           </div>
           <div class="modal-body">
-            <div>            
-                
+            <div>
+
             </div>
           </div>
         </div>
@@ -254,83 +254,7 @@
     </div>
 
 
-    <script type="text/JavaScript">
-      var network;
-      var allNodes;
-
-      var nodesDataset = new vis.DataSet(nodes);
-      var edgesDataset = new vis.DataSet(edges);
-      function redrawALL(){
-        var container = document.getElementById('mynetwork');
-        var options = {
-          height: '100%',
-          width: '100%',
-          nodes: {
-            shape: "dot",
-            scaling: {
-              min: 10,
-              max: 30
-            
-          },
-          font: {
-            size: 12,
-            face: "Tahoma"
-            }
-          },
-          edges: {
-            width: 0.15,
-            color: {inherit: 'from'},
-            smooth: {
-              type: 'continuous'
-            }
-          },
-          physics: false,
-          interaction: {
-            tooltipDelay: 200,
-            hideEdgesOnDrag: true
-          }
-      };
-
-        var data = {nodes:nodesDataset, edges:edgesDataset}
-        network = new vis.Network(container, data, options);
-      
-        allNodes = nodesDataset.get({returnType:"Object"});
-      }
-      redrawALL();
-
-      function fullscreen(){
-        var docElm = document.documentElement;
-        if (docElm.requestFullscreen) {
-            docElm.requestFullscreen();
-        }
-        else if (docElm.mozRequestFullScreen) {
-            docElm.mozRequestFullScreen();
-        }
-        else if (docElm.webkitRequestFullScreen) {
-            docElm.webkitRequestFullScreen();
-        }
-        else if (docElm.msRequestFullscreen) {
-            docElm.msRequestFullscreen();
-        }
-              }
-
-        /*function capture_value(){
-          alert(123);
-        }*/
-
-     /* document.getElementById("yes").addEventListener("click", function(){
-    alert(1234);
-    });*/
-   /* var radio_yes = document.getElementById('yes');
-    radio_yes.onclick = handler;
-
-    function handler() {
-      alert('clicked');
-    }*/
-
-
-
-    </script>
+    <script type="text/JavaScript" src="js/graph.js"></script>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
