@@ -15,7 +15,8 @@ app.post('/explore', function(req, res) {
 });
 
 function getResponse(body) {
-    if(!body) {
+    if(body.length == 0) {
+        console.log('SLEEP');
         body = "[[]]";
     }
     var deferred = q.defer();
