@@ -10,12 +10,13 @@ app.use(bodyParser.json());
 
 // respond with "hello world" when a GET request is made to the homepage
 app.post('/explore', function(req, res) {
-    console.log(req.body);
+    console.log('body in handler = ' +req.body);
     getResponse(req.body).then(console.log);
 });
 
 function getResponse(body) {
     var deferred = q.defer();
+    console.log('body in get response = ' + body);
     var cmd = 'echo "' + body + '" | python ../backend/course_selection_engine/CoursePathPredictor.py';
     console.log('command = ' + cmd);
     child_process.exec('echo "' + body + '" | python ../backend/course_selection_engine/CoursePathPredictor.py',
