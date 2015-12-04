@@ -85,7 +85,7 @@ class CoursePathPredictor:
         for semester in source:
             new_sem = []
             for course in semester:
-                new_sem += [source.split("|")[1]]
+                new_sem += [str(source).split("|")[1]]
             new_source += new_sem
         self.predict(new_source)
 
