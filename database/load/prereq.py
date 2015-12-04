@@ -32,7 +32,7 @@ for row in rows:
 		classes = re.finditer('([A-Z]+ \d+[a-z])',prereq_string)
 		if classes:
 			for prereq in classes:
-				cur.execute("INSERT INTO prereq(id,prereq_name) VALUES ('%s','%s');" % (row[0], prereq.group(1)))
+				cur.execute("INSERT INTO prereq(id,prereq_name) VALUES ('%s','%s');" % (row[0].split("-")[1], prereq.group(1)))
 	coreq_match = re.search('(Corequisites:[^\.]+)', row[1])
 	if coreq_match:
 		#print prereq_match.group(1)
@@ -40,7 +40,7 @@ for row in rows:
 		classes = re.finditer('([A-Z]+ \d+[a-z])',coreq_string)
 		if classes:
 			for coreq in classes:
-				cur.execute("INSERT INTO coreq(id,coreq_name) VALUES ('%s','%s');" % (row[0], coreq.group(1)))
+				cur.execute("INSERT INTO coreq(id,coreq_name) VALUES ('%s','%s');" % (row[0].split("-")[1], coreq.group(1)))
 	#print row
 # Query the database and obtain data as Python objects
 
