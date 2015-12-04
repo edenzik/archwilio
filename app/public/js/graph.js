@@ -40,7 +40,8 @@ function redrawALL(){
         },
         layout: {
             hierarchical: {
-                direction: 'LR'
+                direction: 'LR',
+                sortMethod: 'directed'
             }
         }
     };
@@ -48,9 +49,76 @@ function redrawALL(){
     var data = {nodes:nodesDataset, edges:edgesDataset}
     network = new vis.Network(container, data, options);
 
+    // Update course paths when nodes are selected
+    network.on("selectNode", function (params) {
+        var selected = network.getSelectedNodes();
+        network.setData({nodes: new vis.DataSet(nodes2), edges: new vis.DataSet(edges2)});
+        network.selectNodes(selected);
+        /**
+        $.post(url, getHierarchies(params.nodes), function(data, status) {
+
+        });
+        **/
+    });
+
+    // Deselect all nodes in a higher hierarchy than the deselected node
+    network.on("deselectNode", function (params) {
+        // Figure out distance (hierarchy) of deselected node
+        var deselected = arrayDiff(params.previousSelection.nodes, params.nodes);
+        var distObj = network.getPositions(deselected);
+        var maxDist = distObj[Object.keys(distObj)[0]].x;
+
+        // Keep selecting all nodes with lower or equal distance (hierarchy)
+        // than deselected node
+        var positionsOfSelected = network.getPositions(network.getSelectedNodes());
+        var keepSelected = [];
+        Object.keys(positionsOfSelected).forEach(function(node) {
+            if (positionsOfSelected[node].x <= maxDist) {
+                keepSelected.push(node);
+            }
+        });
+        
+        network.unselectAll();
+        network.selectNodes(keepSelected);
+    });
+
     allNodes = nodesDataset.get({returnType:"Object"});
 }
 redrawALL();
+
+// Returns the set difference of two arrays.
+// i.e. arrayDiff([1, 2, 3], [1, 2]) => [2]
+function arrayDiff(a, b) {
+    return a.filter(function(i) {return b.indexOf(i) < 0;});
+}
+
+// Given an array of node ids, returns a nested array where each outer
+// array represents the hierarhical positions of the nodes in the DAG
+function getHierarchies(nodes) {
+    var locations = network.getPositions(nodes);
+    var distMap = {};
+    Object.keys(locations).forEach(function(id) {
+        var dist = locations[id].x;
+        if (!distMap[dist]) {
+            distMap[dist] = [];
+        }
+        distMap[dist].push(id);
+    });
+    return getValsSortedByKeys(distMap);
+}
+
+// Returns an array of the values of this object, sorted
+// by the keys of this object
+function getValsSortedByKeys(obj) {
+    console.log(obj);
+    var keys = Object.keys(obj);
+    keys.sort();
+    var sorted = [];
+    for (var i = 0; i < keys.length; ++i) {
+        sorted.push(obj[keys[i]]);
+    }
+    return sorted;
+}
 
 function fullscreen(){
     var docElm = document.documentElement;
