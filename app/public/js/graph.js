@@ -48,24 +48,11 @@ function redrawALL(){
 
     var data = {nodes:nodesDataset, edges:edgesDataset}
     network = new vis.Network(container, data, options);
+    generateGraph([]);
 
     // Update course paths when nodes are selected
     network.on("selectNode", function (params) {
-        var selected = network.getSelectedNodes();
-        // network.setData({nodes: new vis.DataSet(nodes2), edges: new vis.DataSet(edges2)});
-        var hier = getHierarchies(params.nodes);
-        console.log(hier);
-        $.ajax({
-            url:'http://localhost:8000/explore',
-            type:"POST",
-            data: JSON.stringify(hier),
-            contentType:"application/json; charset=utf-8",
-            dataType:"json",
-            success: function(data){
-                console.log(data);
-            }
-        })
-        network.selectNodes(selected);
+        generateGraph(params.nodes);
     });
 
     // Deselect all nodes in a higher hierarchy than the deselected node
@@ -92,6 +79,25 @@ function redrawALL(){
     allNodes = nodesDataset.get({returnType:"Object"});
 }
 redrawALL();
+
+// Generates the graph given the currently selected nodes
+function generateGraph(selectNodes) {
+    var selected = network.getSelectedNodes();
+    // network.setData({nodes: new vis.DataSet(nodes2), edges: new vis.DataSet(edges2)});
+    var hier = getHierarchies(selectNodes);
+    console.log(hier);
+    $.ajax({
+        url:'http://localhost:8000/explore',
+        type:"POST",
+        data: JSON.stringify(hier),
+        contentType:"application/json; charset=utf-8",
+        dataType:"json",
+        success: function(data){
+            console.log(data);
+        }
+    });
+    network.selectNodes(selected);
+}
 
 // Returns the set difference of two arrays.
 // i.e. arrayDiff([1, 2, 3], [1, 2]) => [2]
