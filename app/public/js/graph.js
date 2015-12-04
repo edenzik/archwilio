@@ -53,12 +53,19 @@ function redrawALL(){
     network.on("selectNode", function (params) {
         var selected = network.getSelectedNodes();
         // network.setData({nodes: new vis.DataSet(nodes2), edges: new vis.DataSet(edges2)});
+        var hier = getHierarchies(params.nodes);
+        console.log(hier);
+        $.ajax({
+            url:'http://localhost:8000/explore',
+            type:"POST",
+            data: JSON.stringify(hier),
+            contentType:"application/json; charset=utf-8",
+            dataType:"json",
+            success: function(data){
+                console.log(data);
+            }
+        })
         network.selectNodes(selected);
-        /**
-        $.post(url, getHierarchies(params.nodes), function(data, status) {
-
-        });
-        **/
     });
 
     // Deselect all nodes in a higher hierarchy than the deselected node
