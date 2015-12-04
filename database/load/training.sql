@@ -4,7 +4,7 @@ COPY tmp_x FROM :SOURCE (FORMAT csv);
 UPDATE course
 SET    score = tmp_x.score
 FROM   tmp_x
-WHERE  course.instance_id = tmp_x.instance_id;
+WHERE  course.code = tmp_x.code;
 
 DROP TABLE tmp_x;
 
