@@ -119,6 +119,7 @@ ALTER TABLE course ADD COLUMN "createdAt" TIMESTAMP;
 UPDATE course SET "createdAt" = NOW();
 ALTER TABLE course ADD COLUMN "updatedAt" TIMESTAMP;
 UPDATE course SET "updatedAt" = NOW();
+ALTER TABLE course ADD COLUMN "score" VARCHAR;
 
 CREATE TABLE course_requirement AS
 (
