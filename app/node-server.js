@@ -16,7 +16,9 @@ app.post('/explore', function(req, res) {
 
 function getResponse(body) {
     var deferred = q.defer();
-    child_process.exec('python ../backend/course_selection_engine/CoursePathPredictor.py' + ' \"' + body + '\"',
+    var cmd = 'echo "' + body + '" | python ../backend/course_selection_engine/CoursePathPredictor.py';
+    console.log('command = ' + cmd);
+    child_process.exec('echo "' + body + '" | python ../backend/course_selection_engine/CoursePathPredictor.py');
     function (error, stdout, stderr) {
         deferred.resolve(stdout);
         console.log('stdout: ' + stdout);
