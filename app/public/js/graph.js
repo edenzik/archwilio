@@ -52,7 +52,7 @@ function redrawALL(){
     // Update course paths when nodes are selected
     network.on("selectNode", function (params) {
         var selected = network.getSelectedNodes();
-        network.setData({nodes: new vis.DataSet(nodes2), edges: new vis.DataSet(edges2)});
+        // network.setData({nodes: new vis.DataSet(nodes2), edges: new vis.DataSet(edges2)});
         network.selectNodes(selected);
         /**
         $.post(url, getHierarchies(params.nodes), function(data, status) {
@@ -77,7 +77,7 @@ function redrawALL(){
                 keepSelected.push(node);
             }
         });
-        
+
         network.unselectAll();
         network.selectNodes(keepSelected);
     });
