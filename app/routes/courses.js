@@ -21,8 +21,8 @@ router.get('/', function(req, res) {
       group: ['code', 'name', 'description', 'score'],
       order: 'name ASC'
     }).then(function(courses) {
-      console.log(courses[0]);
 
+    console.log(courses[0]);
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(courses));
   });
@@ -55,15 +55,14 @@ router.post('/train', function(req, res) {
     });
 });
 
-router.post('/rebuild_model', function(req, res) {
+router.get('/rebuild_model', function(req, res) {
   var instance_id = '013170', //req.body.instance_id,
       rating = 0.8;
 
-  models.course.findOnefindAll(
-    { limit: 100,
-      attributes: [
-        'instance_id', 'code', 'name', 'term', 'description', 
-        sequelize.fn('count', sequelize.col('id'))], 
+  models.course.findAll(
+    { attributes: [
+        'code', 'name', 'description', 'score', 
+        [sequelize.fn('count', sequelize.col('instance_id')), 'count']], 
       where: {
         code: {
           $like: 'COSI%'
@@ -72,19 +71,18 @@ router.post('/rebuild_model', function(req, res) {
           $gte: '1152'
         }
       },
-      group: ['code', 'name', 'term', 'description', 'instance_id'],
+      group: ['code', 'name', 'description', 'score'],
       order: 'name ASC'
-    }).then(function(course) {
+    }).then(function(courses) {
 
       console.log('posting');
+      console.log(courses[0]['dataValues']);
+      data = _.map(courses, function(c) { return courses[0]['dataValues'] });
+      console.log(data);
+
       request.post({
-        url:'http://localhost:8000/estimators/train',
-        form: {
-          instance_id:instance_id,
-          rating: rating,
-          name: course.dataValues.name,
-          description: course.dataValues.description,
-          code: course.dataValues.code}},
+        url:'http://localhost:8000/estimators/rebuild_model',
+        form: {courses: courses}},
         function optionalCallback(err, httpResponse, body) {
           if (err) {
             return console.error('upload failed:', err);
