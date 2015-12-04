@@ -15,6 +15,9 @@ app.post('/explore', function(req, res) {
 });
 
 function getResponse(body) {
+    if(!body) {
+        body = "[[]]";
+    }
     var deferred = q.defer();
     console.log('body in get response = ' + body);
     var cmd = 'echo "' + body + '" | python ../backend/course_selection_engine/CoursePathPredictor.py';
