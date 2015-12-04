@@ -1,3 +1,4 @@
+// Jack's format
 var nodes = [
   {id: 1,  title: 'Course: ' + 'cosi11:xxxx' + '<br>' + 'cosi21:xxxx' + '<br>' + 'cosi22:xxxx', value: 22, group: 0},
   {id: 2,  title: 'Course: ' + 'cosi11:xxxx' + '<br>' + 'cosi21:xxxx' + '<br>' + 'cosi22:xxxx', value: 24, group: 0},
@@ -33,7 +34,25 @@ var edges = [
   {from: 3, to: 10},
   {from: 3, to: 5},
   {from: 4, to: 7},
-  {from: 4, to: 8},  
+  {from: 4, to: 8},
   {from: 4, to: 9},
   {from: 4, to: 10}
 ];
+
+// Josh's format
+course:
+{ course_id: 123,
+  user_score: <0 or 1>,
+  user_score_prediction: <0.0 - 1.0>,
+  popularity: .5,
+  name: “Topics in Distributed Computing”
+}
+
+courses: [<course>, <course> ...]
+
+course_path:
+{ average_user_score_prediction: <0.0 - 1.0>,
+  courses: [<course>, <course> ...]
+}
+
+course_paths: [<course_path>, <course_path> ...]

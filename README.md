@@ -10,6 +10,7 @@
 ### make new database accessible to setup scripts
 - export PGDATABASE=cosi228_development
 - export PGHOST='127.0.0.1'
+- export PGUSER=cosi228_development
 
 ### initialize database
 - `cd database`
