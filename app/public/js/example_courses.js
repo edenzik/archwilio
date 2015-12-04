@@ -1,4 +1,4 @@
-var nodes = [
+var nodes2 = [
   {id: 1,  label: '11a', value: 22},
   {id: 2,  label: '12b', value: 100},
   {id: 3,  label: '21a', value: 22},
@@ -9,7 +9,7 @@ var nodes = [
   {id: 8,  label: '29a', value: 34}
 ];
 
-var edges = [
+var edges2 = [
   {from: 1, to: 2},
   {from: 1, to: 3},
   {from: 1, to: 6},
@@ -18,4 +18,15 @@ var edges = [
   {from: 1, to: 7},
   {from: 4, to: 6},
   {from: 2, to: 3}
+];
+
+var nodes3 = [
+  {id: 1,  label: '11a', value: 22},
+  {id: 2,  label: '12b', value: 100},
+  {id: 4,  label: '29a', value: 22},
+];
+
+var edges3 = [
+  {from: 1, to: 2},
+  {from: 4, to: 2},
 ];
