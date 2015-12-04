@@ -1,0 +1,179 @@
+instance_id,code,name,description,score
+12337,COSI 12B,Advanced Programming Techniques,"Prerequisite: COSI 11a or programming facility in C.
+
+An introduction to fundamental programming techniques covering basic software engineering, object oriented programming, interfaces, APIs and abstract classes, with applications to Graphical User Interfaces, web programming, graphics, and other topics. Usually offered every year.
+Staff",
+1728,COSI 227B,Advanced Topics in Database Systems,"Prerequisite: COSI 127b.
+
+An in-depth treatment of advanced topics in database management systems. Topics vary from year to year and may include distributed databases, query processing, transaction processing, and Web-based data management. Usually offered every second year.
+Mr. Cherniack",
+1683,COSI 180A,Algorithms,"Prerequisites: Undergraduates and combined BA/MA students must complete COSI 21a and COSI 29a, and received a B+ or better. Graduate students should have a background in basic data structures and algorithms, discrete mathematics, and computer architecture. Graduate students may not take this course concurrently with COSI 21a or COSI 29a or COSI 131a.
+
+Basic concepts in the theory of algorithm design and analysis, including advanced data structures and algorithms, parallel algorithms, and specialized topics. Usually offered every second year.
+Staff",4.5
+1647,COSI 113B,Artificial Life,"Prerequisite: COSI 21a.
+
+Explores genetic algorithms, genetic programming, evolutionary programming, blind watchmaking, and related topics, ultimately focusing on co-evolutionary spirals and the automatic construction of agents with complex strategies for games. Usually offered every second year.
+Mr. Pollack",4
+12966,COSI 136A,Automated Speech Recognition,"Prerequisite: COSI 114b, or COSI 12b and 121b, or permission of the instructor. 
+
+Explores speech recognizer core components and their underlying algorithms, surveying real applications. Covers phonetics, HMMs, finite state grammars, statistical language models, and industry standards for implementing applications, like VXML. Students build and analyze simple applications using a variety of toolkits. Usually offered every year.
+Ms. Meteer",5
+13497,COSI 166B,Capstone Project for Software Entrepreneurs,"Prerequisite: COSI 21a. Corequisite: COSI 167b.
+
+Builds on COSI 165a and teaches modern software engineering concepts, emphasizing rapid prototyping, unit testing, usability testing, and collaborative software development principles. Students apply these concepts by building a complex software system in small teams of programmers/developers using current platforms and technologies. Usually offered every year.
+Mr. Salas",
+013562-IND,COSI 299A,Computational Linguistics Master's Thesis,"Permission of the graduate advising head required. May be repeated once for credit.
+
+Staff",5
+013466-IND,COSI 293B,Computational Linguistics Research Internship,"Permission of the graduate advising head required.
+
+Offers graduate students a opportunity to engage in industrial research in computational linguistics by completing a paid or unpaid internship of at least ten weeks duration approved and monitored by a faculty member. 
+Staff",
+12691,COSI 138A,Computational Linguistics Second Year Seminar,"Open to students in the final term of the MA program in Computational Linguistics. Also open to PhD students in Computational Linguistics. Students in Computer Science MA or PhD programs may enroll with permission of the instructor.
+
+A seminar on research methods, writing, and presentations, and in abstract writing. Aims to help students learn to prepare and deliver oral presentations and written papers of their research work, according to the standards used and expected in this field—both in industry job and academic settings. This will be useful to students applying for jobs in industry or for further graduate work at the Ph.D. level, as well as for the work carried out in such jobs and academic study. Usually offered every year.
+Ms. Goldberg",
+1669,COSI 155B,Computer Graphics,"Prerequisite: COSI 11a. 
+
+An introduction to the art of displaying computer-generated images and to the design of graphical user interfaces. Topics include graphic primitives; representations of curves, surfaces, and solids; and the mathematics of two- and three-dimensional transformations. Usually offered every third year.
+Mr. Hickey",3
+1722,COSI 21A,Data Structures and the Fundamentals of Computing,"Prerequisite: COSI 11a or programming facility in C.
+
+An introduction to the fundamental concepts of computation: discrete structures (sets, relations, functions, sequences, graphs), the fundamental data structures and algorithms for sorting and searching (lists, queues, dequeues, heaps, hashing, binary trees, tries), and the analysis of algorithms (predicate logic, termination and correctness proofs, computational complexity). Usually offered every year.
+Mr. Storer",4
+1656,COSI 127B,Database Management Systems,"Prerequisites: COSI 12b or 21a and COSI 29a.
+
+Introduces database structure, organization, and languages. Studies relational and object-oriented models, query languages, optimization, normalization, file structures and indexes, concurrency control and recovery algorithms, and distributed databases. Usually offered every second year.
+Mr. Cherniack",
+1736,COSI 29A,Discrete Structures,"Covers topics in discrete mathematics with applications within computer science. Some of the topics to be covered include graphs and matrices; principles of logic and induction; number theory; counting, summation, and recurrence relations; discrete probability. Usually offered every year.
+Staff",3
+001766-IND,COSI 400D,Dissertation Research,"Specific sections for individual faculty members as requested.
+Staff",
+1663,COSI 147A,Distributed Systems,"Prerequisite: COSI 131a and C/C++/UNIX programming skills.
+
+This course covers abstractions and implementation techniques for the design of distributed systems. Topics include: distributed state sharing, coherence, storage systems, naming systems, security, faulttolerance and replication, scalability and performance. The assigned readings for the course are from current literature. Usually offered every second year.
+Ms. Shrira",5
+1761,COSI 101A,Fundamentals of Artificial Intelligence,"Prerequisites: COSI 21a.
+
+Survey course in artificial intelligence. Introduction to Lisp and heuristic programming techniques. Topics include problem solving, planning natural language processing, knowledge representation, and computer vision. Usually offered every year.
+Mr. Pollack",4.5
+1649,COSI 114B,Fundamentals of Computational Linguistics,"Prerequisites: COSI 11a and LING 131a, or permission of the instructor.
+
+Provides a fundamental understanding of the problems in natural language understanding by computers, and the theory and practice of current computational linguistic systems. Of interest to students of artificial intelligence, algorithms, and the computational processes of comprehension and understanding. Usually offered every year.
+Ms. Meteer and Mr. Pustejovsky",
+012959-IND,COSI 393G,Graduate Research Internship,"Permission of the graduate program director required. Yields quarter-course credit. May be repeated for credit. For Ph.D. students only.
+
+Offers Ph.D students an opportunity to engage in industrial research in computer science by completing a paid or unpaid internship of at least ten weeks duration and forty hours per week, approved and monitored by a faculty member. Usually offered every summer.
+Staff",
+1655,COSI 125A,Human-Computer Interaction,"Prerequisite: sophomore standing.
+
+Covers the basic theory and concepts of human-computer interaction. Topics include methodology for designing and testing user interfaces, interaction styles and techniques, design guidelines, and adaptive systems. The laboratory work is designed to give the student practice in a set of basic techniques used in the area of human-computer interaction. Usually offered every second year.
+Mr. Alterman",2
+12338,COSI 320A,IT Entrepreneurship Practicum I,"Prerequisites: COSI 235a, 236b, and permission of the faculty advisor.
+
+This course guides students through the process of developing a marketable prototype of an original software application and helps them prepare a business plan for that application. Usually offered every year.
+Staff",1
+12339,COSI 320B,IT Entrepreneurship Practicum II,"Prerequisite: COSI 320a.
+
+Staff",1
+001800-IND,COSI 98A,Independent Study,"Open to exceptional students who wish to study an area of computer science not covered in the standard curriculum. Usually offered every year.
+Staff",
+001713-IND,COSI 210A,Independent Study,"Usually offered every year. May be repeated once for credit.
+Staff",
+012511-IND,COSI 98AJ,Independent Study,"In this JBS capstone course, students will work together in small teams to create web and/or mobile applications that are designed to support specific social movements, using the knowledge they have gained from both the COSI and POL courses they have completed. By the end of the program students will create and launch a beta version of the site and will study the potential effectiveness of the site in its goal of supporting a social movement. The teams will present their products at a JBS Product Showcase during the last week of class. Offered as part of JBS program.
+Staff",
+001802-IND,COSI 98B,Independent Study,"Open to exceptional students who wish to study an area of computer science not covered in the standard curriculum. Usually offered every year.
+Staff",
+13168,COSI 137B,Information Extraction,"Prerequisites: COSI 101a, COSI 121b, COSI 134a or permission of the instructor.
+
+Examines the major issues and techniques in extracting semantically meaningful information from unstructured data, putting the information into a structured database for easy access and manipulation. Teaches students to design and implement a working natural language system. Usually offered every year.
+Mr. Xue",
+13394,COSI 132A,Information Retrieval,"Prerequisite: COSI 21a, COSI 101a or COSI 114b.
+
+Explores the theory and practice of textual information retrieval, including text indexing; Boolean, vector space and probabilistic retrieval models; evaluation; interfaces; linguistic issues; web search; QA and text classification. Students will implement algorithms and design and build a search-based application. Usually offered every second year.
+Mr. Anick",
+1743,COSI 130A,Introduction to the Theory of Computation,"Prerequisite: COSI 29a. May not be taken for credit by students who took COSI 30a in prior years.
+
+Formal treatment of models of computation: finite automata and regular languages, pushdown automata and context-free languages, Turing machines, and recursive enumerability. Church's thesis and the invariance thesis. Halting problem and undecidability, Rice's theorem, recursion theorem. Usually offered every year.
+Mr. Mairson",
+001738-IND,COSI 300A,Master's Project,"Usually offered every year.
+Staff",
+001740-IND,COSI 300B,Master's Project,"Usually offered every year.
+Staff",
+012958-IND,COSI 293G,Master's Research Internship,"Permission of the graduate program director required. Yields quarter-course credit. May be repeated for credit. Intended for Master's students. 
+
+Offers graduate students an opportunity to engage in industrial research in computer science by completing a paid or unpaid internship of at least ten weeks duration approved and monitored by a faculty member. Usually offered every semester.
+Staff",
+13276,COSI 153A,Mobile Application Development,"Prerequisites: COSI 11a and 12b.
+
+Introduces the design and analysis of mobile applications that covers the architecture of mobile devices, APIs for graphical user interfaces on mobile devices, location-aware computing, social networking. Also covers the theory and practice of space and time optimization for these relatively small and slow devices. Usually offered every second year.
+Staff",4
+13393,COSI 140B,Natural Language Annotation for Machine Learning,"Prerequisite: COSI 114b or LING 131a and concurrent enrollment in COSI 114b.
+
+Studies corpus linguistics, the computational study of any naturally occurring fragment of language, a key area for data mining, information extraction, and machine learning. Students model, annotate, train, test, evaluate, and revise their own corpus for machine learning. Usually offered every second year.
+Mr. Pustejovsky",4
+1751,COSI 131A,Operating Systems,"Prerequisites: COSI 12b or 21a. May not be taken for credit by students who took COSI 31a in prior years. 
+
+Fundamental structures of a computer system from hardware abstractions through machine and assembly language, to the overall structure of an operating system and key resource management abstractions. Usually offered every year.
+Ms. Shrira",5
+1651,COSI 11A,Programming in Java and C,"Open only to students with no previous programing background.
+
+A general introduction to structured programming and problem solving using C and Java in the context of the World Wide Web. Students also learn GUI programming and advanced HTML authoring. There are weekly programming assignments.  Usually offered every semester.
+Staff",
+001698-IND,COSI 200A,Readings,"Specific sections for individual faculty members as requested.
+Staff",
+001699-IND,COSI 200B,Readings,"Specific sections for individual faculty members as requested.
+Staff",
+011817-IND,COSI 93A,Research Internship and Analysis,"Provides students with an opportunity to work in a computer science research lab for one semester, pursuing a project that has the potential to produce new scientific results. Students and the faculty member mutually design a project for the semester that supports the research agenda of the group. Students must attend all research group meetings and present their findings in oral and written form at the end of the semester. The project typically includes background research, some lab work, and collaboration with other group members. Course requires signature of the instructor, is subject to the availability of undergraduate research positions, and is typically open only to juniors and seniors.
+Staff",
+12583,COSI 177A,Scientific Data Processing in Matlab,"Prerequisite: COSI 11a. MATH 15a is recommended.
+
+Introduces scientific computing using Matlab. Programming concepts such as data types, vectors, conditional execution, loops, procedural abstraction, modules, APIs are presented. The course will present scientific techniques relevant to computational science, with an emphasis on image processing. Usually offered every second year.
+Ms. DiLillo",4
+001806-IND,COSI 99D,Senior Research,"Prerequisites: Open only to seniors. Submission of a thesis proposal during the spring semester of the junior year. This proposal must be signed by a faculty member who has agreed to supervise the thesis.
+
+Research assignments and preparation of a report under the direction of an instructor. Usually offered every year.
+Staff",
+13586,COSI 105B,Software Engineering for Scalability,"Prerequisites: COSI 12b and COSI 21a.
+
+Covers some of the ""big ideas"" that come in to play when building large, complex, and highly scaled software systems. We will look at both research and practice in key areas such as software project management, programming and design, intellectual property, and scaling architectures. This course culminates with a term project. Usually offered every year.
+Mr. Salas",
+13496,COSI 165A,Software Entrepreneurship,"Prerequisite: Sophomore standing.
+
+Covers the fundamental concepts needed to transform an idea for a software application into a viable IT business. The focus of the course is on software-based IT enterprises and the specific challenges and opportunities they present. Learn the ""Lean Startup"" process in this course with a significant hands-on focus. Usually offered every year.
+Mr. Salas",
+13403,COSI 115BJ,Spoken Dialog Design,"Explores fundamental concepts underlying spoken dialog applications. Topics include principles of human dialog, speech recognition and synthesis, and VUI design. Students will use industry standard tools in speech recognition, natural language, and dialog design to build interactive applications. Offered as part of JBS program.
+Ms. Meteer",
+12324,COSI 134A,Statistical Approaches to Natural Language Processing,"Prerequisite: COSI 101a or COSI 114b.  This course may be taken concurrently with COSI 114b.
+
+An introductory graduate-level course covering fundamental concepts in statistical Natural Language Processing (NLP). Provides an in-depth view of the statistical models and machine-learning methods used in NLP, including methods used in morphological, syntactic, and semantic analysis. Usually offered every year.
+Mr. Wellner",5
+11074,COSI 123A,Statistical Machine Learning,"Prerequisite: COSI 29a and MATH 10a
+
+Focuses on learning from data using statistical analysis tools and deals with the issues of designing algorithms and systems that automatically improve with experience. This course is designed to give students a thorough grounding in the methodologies, technologies, mathematics, and algorithms currently needed by research in learning with data. Usually offered every year.
+Mr. Hong",5
+1725,COSI 121B,Structure and Interpretation of Computer Programs,"Prerequisites: COSI 11a or programming facility in C. May not be taken for credit by students who took COSI 21b in prior years.
+
+An introduction to idioms of programming methodology, and to how programming languages work. Principles of functional programming, data structures and data abstraction; state, imperative and object-oriented programming; lazy data structures; how an interpreter works; metalinguistic abstraction and programming language design; syntax analysis, lexical addressing, continuations and explicit control; continuation-passing style, metacircular and register-machine compilers. Usually offered every year.
+Mr. Mairson",
+12474,COSI 154AJ,The JBS Incubator,"Prerequisite: COSI 11a.
+
+An introduction to software engineering for web and mobile applications. Covers agile programming techniques, rapid prototyping, source control paradigms, effective software documentation, design of effective APIs, software testing and analysis, software licensing, with an introduction to business plans for software entrepreneurs. Offered as part of JBS program.
+Mr. Hickey and Ms. Meteer",3
+1644,COSI 111A,Topics in Computational Cognitive Science,"Prerequisite: COSI 101a or 125a, or permission of the instructor.
+
+Focuses on cognitive and social theories of activity that underlie human computer interaction and computer mediated collaboration. Topics include problem solving and skill acquisition, planning and situated activity, distributed cognition, activity theory, collaboration, communication, discourse, and interaction analysis. The laboratory work is designed to give the student practice with the ideas and techniques under discussion. The content and work of the course are specifically designed for an interdisciplinary class of students from computer science and the social sciences. Usually offered every second year.
+Mr. Alterman",3
+12299,COSI 228A,Topics in Distributed Systems,"Prerequisite: COSI 12b.
+
+Advanced topics in networked information systems and internet-scale data management. Usually offered every third year.
+Ms. Papaemmauouil",5
+12473,COSI 152AJ,Web Application Development,"Prerequisites: COSI 11a, 12b, or permission of the instructor.
+
+An introduction to web programming that covers the fundamental languages and tools, including HTML/CSS for page layout, javascript/ajax for client-side integration, and server-side programming in javascript using Node/Express, Mongo, and MySQL. The course also discusses security, scaling/optimization, and multi-tier architectures. Offered as part of JBS program.
+Mr. Hickey",3
+12688,COSI 152BJ,Web Application Development for Social Networks,"Prerequisites: COSI 11a and 12b, or previous programming experience and permission of the instructor.   
+
+Students will learn how to develop social network appications using Javascript and HTML interacting with databases on the client and server. We don't assume any previous experience with Javascript. We will also create a taxonomy of social networking systems to determine the role of each feature of such systems in their design and operation, and we will explore the use of particular web app features to support social movements.  The course covers a variety of topics in web architecture, such as system security, scaling and deployment, REST interfaces, and others. Offered as part of JBS program.
+Mr. Hickey",3

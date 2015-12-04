@@ -10,8 +10,10 @@ app.use(bodyParser.json());
 
 // respond with "hello world" when a GET request is made to the homepage
 app.post('/explore', function(req, res) {
-    console.log('body in handler = ' +req.body);
-    getResponse(req.body).then(console.log);
+    var body = JSON.stringify(req.body);
+    console.log('body in handler = ');
+    console.log(body);
+    getResponse(body).then(console.log);
 });
 
 function getResponse(body) {
