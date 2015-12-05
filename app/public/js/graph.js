@@ -88,18 +88,17 @@ function generateGraph(selectNodes) {
         data: JSON.stringify(hier),
         contentType:"application/json; charset=utf-8",
         dataType:"json",
+        success: function (data) {
+            if(data) {
+                console.log(data);
+                network.setData({nodes: new vis.DataSet(data.nodes), edges: new vis.DataSet(data.edges)})
+                network.selectNodes(selectNodes);
+            }
+        },
         error: function(one, status, error) {
             console.log(status);
             console.log(error);
         }
-    }).done(function(data){
-        if(data) {
-            console.log(data);
-            network.setData({nodes: new vis.DataSet(data.nodes), edges: new vis.DataSet(data.edges)})
-            network.selectNodes(selectNodes);
-        }
-    }).fail(function(msg) {
-        alert(JSON.stringify(msg));
     });
 }
 
