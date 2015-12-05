@@ -4,6 +4,7 @@ var router = express.Router();
 var sequelize = models.sequelize;
 var http = require('http');
 var request = require('request');
+var _ = require('lodash');
 
 router.get('/', function(req, res) {
   models.course.findAll(
@@ -75,14 +76,11 @@ router.get('/rebuild_model', function(req, res) {
       order: 'name ASC'
     }).then(function(courses) {
 
-      console.log('posting');
-      console.log(courses[0]['dataValues']);
-      data = _.map(courses, function(c) { return courses[0]['dataValues'] });
-      console.log(data);
-
+      // data = _.map(courses, function(c) { return courses[0]['dataValues'] });
+      // console.log(JSON.stringify(courses))
       request.post({
         url:'http://localhost:8000/estimators/rebuild_model',
-        form: {courses: courses}},
+        form: {courses: JSON.stringify(courses)}},
         function optionalCallback(err, httpResponse, body) {
           if (err) {
             return console.error('upload failed:', err);
