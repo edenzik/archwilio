@@ -46,7 +46,7 @@ function redrawALL(){
         }
     };
 
-    var data;
+    var data = {nodes:nodesDataset, edges:edgesDataset}
     network = new vis.Network(container, data, options);
     generateGraph([]);
 
@@ -71,6 +71,7 @@ function redrawALL(){
                 keepSelected.push(node);
             }
         });
+
         network.unselectAll();
         network.selectNodes(keepSelected);
     });
@@ -81,6 +82,8 @@ redrawALL();
 
 // Generates the graph given the currently selected nodes
 function generateGraph(selectNodes) {
+    var selected = network.getSelectedNodes();
+    // network.setData({nodes: new vis.DataSet(nodes2), edges: new vis.DataSet(edges2)});
     var hier = getHierarchies(selectNodes);
     $.ajax({
         url:'http://localhost:8000/explore',
@@ -96,11 +99,11 @@ function generateGraph(selectNodes) {
         if(data) {
             console.log(data);
             network.setData({nodes: new vis.DataSet(data.nodes), edges: new vis.DataSet(data.edges)})
-            network.selectNodes(selectNodes);
         }
     }).fail(function(msg) {
         alert(JSON.stringify(msg));
     });
+    network.selectNodes(selected);
 }
 
 // Returns the set difference of two arrays.

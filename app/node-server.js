@@ -10,19 +10,22 @@ app.use(bodyParser.json());
 
 // respond with "hello world" when a GET request is made to the homepage
 app.post('/explore', function(req, res) {
-    var body = JSON.stringify(req.body);
+    console.log('boo');
+    // Replace double quotes with single quotes
+    var body = JSON.stringify(req.body).replace(/"/g, "'");
     console.log('body in handler = ');
     console.log(body);
-    getResponse(body).then(console.log);
+    getResponse(body).then(function(data) {
+        console.log('here');
+        res.end(data);
+    });
 });
 
 function getResponse(body) {
     if(body.length == 0) {
-        console.log('SLEEP');
         body = "[[]]";
     }
     var deferred = q.defer();
-    console.log('body in get response = ' + body);
     var cmd = 'echo "' + body + '" | python ../backend/course_selection_engine/CoursePathPredictor.py';
     console.log('command = ' + cmd);
     child_process.exec('echo "' + body + '" | python ../backend/course_selection_engine/CoursePathPredictor.py',
