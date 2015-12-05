@@ -27,38 +27,60 @@ class Edge(dict):
 
 conn = psycopg2.connect("dbname=%s user=%s host=%s password=%s" % (os.environ.get('PGDATABASE'), os.environ.get('PGUSER'), os.environ.get('PGHOST'), os.environ.get('PGPASSWORD')))
 
-query_prereqs = "SELECT prereq.id AS course_id, course.instance_id AS prereq_id FROM prereq, course WHERE upper(prereq.prereq_name) = course.code AND course.code LIKE 'COSI%' GROUP BY prereq.id,course.instance_id;"
+query_courses = """
+    SELECT course.term,course.instance_id, course.code,course.name 
+    FROM course, term 
+    WHERE course.code LIKE 'COSI%' AND 
+    course.instance_id NOT LIKE '%-IND' AND 
+    course.code NOT LIKE '%COSI 2___' AND
+    course.term = term.id AND 
+    to_date(term.start, 'YYYY MM') >= to_date('2012 08', 'YYYY MM')
+"""
 
-cur = conn.cursor()
-cur.execute(query_prereqs)
-rows = cur.fetchall()
-cur.close()
-
-
-
-    
-course_to_prereqs = defaultdict(list)
-for row in rows:
-    course_to_prereqs[row[0]].append(row[1])
-
-
-
-query_courses = "SELECT term,instance_id,name from course WHERE code LIKE 'COSI%' AND instance_id NOT LIKE '%-IND' GROUP BY term,instance_id,name"
 cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 cur.execute(query_courses)
 rows = cur.fetchall()
-
-
 cur.close()
-course_to_name = {}
+
+course_to_name = defaultdict(str)
+course_to_name.default_factory = lambda: "GRAD COURSE"
 for row in rows:
     course_to_name[row['instance_id']] = row['name']
+
+course_to_name['-1'] = "Enrollment"
     
 courses = []
 for row in rows:
     courses += [row['instance_id']]
 
 courses = list(set(courses))
+
+# Fetches prereqs
+
+query_prereqs = """
+SELECT course_id, prereq_id 
+FROM prereq, term 
+WHERE prereq.course_term = term.id AND 
+to_date(term.start, 'YYYY MM') >= to_date('2012 08', 'YYYY MM')
+"""
+
+cur = conn.cursor()
+cur.execute(query_prereqs)
+rows = cur.fetchall()
+cur.close()
+
+DUMMY_COURSE = '-1'
+    
+course_to_prereqs = defaultdict(list)   #a map from a course to list of prereq
+course_to_prereqs.default_factory = lambda: [DUMMY_COURSE]
+for row in rows:
+    course_to_prereqs[row[0]].append(row[1])
+
+prereq_to_course = defaultdict(list)   #a map from a course to list of prereq
+for row in rows:
+    prereq_to_course[row[1]].append(row[0])
+prereq_to_course['-1'] = courses
+
 
 
 def meets_prereq(course, prev_courses):
@@ -90,18 +112,24 @@ class CoursePathPredictor:
         self.predict(new_source)
 
     def predict(self,selected_path):
-        suggested_path = [[]] * (len(selected_path) + 1)
-        previous_semester = []
+        selected_path = [['-1'],['001651'],['012337']]
+        suggested_path = selected_path + [[]]
+        print "digraph {"
+        print "rankdir=LR;"
+        output_str = []
         for idx in range(len(suggested_path)):
-                prior_courses = list(chain.from_iterable(selected_path[0:idx]))
-                later_courses = list(chain.from_iterable(selected_path[idx+1:]))
-                for course in courses:
+            prior_courses = list(chain.from_iterable(selected_path[0:idx]))
+            later_courses = list(chain.from_iterable(selected_path[idx+1:]))
+            for prereq in prior_courses:
+                for course in prereq_to_course[prereq]:
                     if not meets_prereq(course, prior_courses): continue
                     if already_taken(course, prior_courses): continue
                     if will_take(course, later_courses): continue
-                    suggested_path[idx] = suggested_path[idx] + [Node(str(idx) +"|" +  str(course),course_to_name[course])]
-                previous_semester = suggested_path[idx]
-
+                    output_str+= ["\t\"" + str(idx) + "|" + course_to_name[prereq] + "\"->\"" + str(idx) + "|" + course_to_name[course] + "\";"]
+                    #suggested_path[idx] = suggested_path[idx] + [Node(str(idx) +"|" +  str(course),course_to_name[course])]
+        print "".join(set(output_str))
+        print "}"
+        sys.exit()
         edges = []
         for from_nodes,to_nodes in list(window(suggested_path,2)):
             for from_node in from_nodes:
