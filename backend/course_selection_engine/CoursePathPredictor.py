@@ -7,23 +7,6 @@ import os
 import sys
 import ast
 
-def window(iterable, size):
-    iters = tee(iterable, size)
-    for i in xrange(1, size):
-        for each in iters[i:]:
-            next(each, None)
-    return izip(*iters)
-
-class Node(dict):
-    def __init__(self,node_id,label):
-        self['id'] = node_id
-        self['label'] = label
-        self['value'] = 10
-        
-class Edge(dict):
-    def __init__(self, from_node, to_node):
-        self['from'] = from_node['id']
-        self['to'] = to_node['id']
 
 conn = psycopg2.connect("dbname=%s user=%s host=%s password=%s" % (os.environ.get('PGDATABASE'), os.environ.get('PGUSER'), os.environ.get('PGHOST'), os.environ.get('PGPASSWORD')))
 
@@ -43,7 +26,7 @@ rows = cur.fetchall()
 cur.close()
 
 course_to_name = defaultdict(str)
-course_to_name.default_factory = lambda: "GRAD COURSE"
+course_to_name.default_factory = lambda: "UNKNOWN COURSE"
 for row in rows:
     course_to_name[row['instance_id']] = row['name']
 
@@ -101,14 +84,32 @@ def find_node(nodes, value):
             return node
 
 
+class Node(dict):
+    def __init__(self,course,idx,label,color="lightyellow1"):
+        self['color'] = color
+        self['course'] = course
+        self['idx'] = idx
+        self['id'] = "{0}|{1}".format(idx,label)
+        self['label'] = label
+        self['value'] = 10
+    def __dot__(self):
+        return "\"{0}\" [label=\"{1}\", style=filled, color={2}];".format(self['id'],self['label'],self['color'])
+        
+class Edge(dict):
+    def __init__(self, from_node, to_node):
+        self['from'] = from_node
+        self['to'] = to_node
+    def __dot__(self):
+        return "\"{0}\" -> \"{1}\";".format(self['from']['id'],self['to']['id'])
+
 class CoursePathPredictor:
     def __init__(self,source):
+        self.nodes = []
+        self.edges = []
         self.predict(source)
 
     def predict(self,selected_path):
         suggested_path = selected_path + [[]]
-        print "digraph {"
-        print "rankdir=LR;"
         output_str = []
         atts_str = []
         for idx in range(len(suggested_path)):
@@ -124,17 +125,20 @@ class CoursePathPredictor:
             potential_courses = list(set(potential_courses))
             for prereq in suggested_path[idx-1]:
                 for course in potential_courses:
-                    atts_str+= ["\t\"" + str(idx-1) + "|" + course_to_name[prereq] + "\"[style=filled, fillcolor=red];\n"]
-                    output_str+= ["\t\"" + str(idx-1) + "|" + course_to_name[prereq] + "\"->\"" + str(idx) + "|" + course_to_name[course] + "\";\n"]
-        print "".join(set(atts_str))
-        print "".join(set(output_str))
-        print "}"
-        sys.exit()
+                    from_node = Node(prereq,idx-1,course_to_name[prereq],"red")
+                    to_node = Node(course,idx,course_to_name[course])
+                    edge = Edge(from_node,to_node)
+                    self.nodes.append(from_node)
+                    self.nodes.append(to_node)
+                    self.edges.append(edge)
+
+    def __dot__(self):
+        return "digraph {{ rankdir=\"LR\";\n {0} {1} }}".format("\n".join(map(Node.__dot__, self.nodes)),"\n".join(map(Edge.__dot__,self.edges)))
 
     def __str__(self):
         return json.dumps({"nodes":self.nodes,"edges":self.edges})
 
-print CoursePathPredictor(ast.literal_eval(sys.stdin.read()))
+print CoursePathPredictor(ast.literal_eval(sys.stdin.read())).__dot__()
 
 
 
