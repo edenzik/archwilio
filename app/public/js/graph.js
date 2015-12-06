@@ -12,17 +12,18 @@ function redrawALL(){
         nodes: {
             shape: "dot",
             fixed: true,
+            mass: 20,
             scaling: {
                 customScalingFunction: function (min, max, total, value) {
                     return value / total;
                 },
-                min: 5,
+                min: 10,
                 max: 150
             },
             font: {
                 size: 14,
                 face: "Tahoma",
-                color: "#FFFFFF"
+                color: "0x1b2024"
             }
         },
         edges: {
@@ -41,6 +42,7 @@ function redrawALL(){
         layout: {
             hierarchical: {
                 direction: 'LR',
+                levelSeparation: '350',
                 sortMethod: 'directed'
             }
         }
@@ -117,6 +119,10 @@ function getHierarchies(nodes) {
         var dist = locations[id].x;
         if (!distMap[dist]) {
             distMap[dist] = [];
+        }
+        // Strip pipe from ids
+        if (id.indexOf('|') >= 0) {
+            id = id.split('|')[1];
         }
         distMap[dist].push(id);
     });

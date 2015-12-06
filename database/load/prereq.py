@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import psycopg2
 import os
 import re
