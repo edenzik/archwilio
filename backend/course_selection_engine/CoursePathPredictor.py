@@ -135,10 +135,19 @@ class CoursePathPredictor:
     def __dot__(self):
         return "digraph {{ rankdir=\"LR\";\n {0} {1} }}".format("\n".join(map(Node.__dot__, self.nodes)),"\n".join(map(Edge.__dot__,self.edges)))
 
-    def __str__(self):
+    def __visjs__(self):
         return json.dumps({"nodes":self.nodes,"edges":self.edges})
 
-print CoursePathPredictor(ast.literal_eval(sys.stdin.read())).__dot__()
+output_format = sys.argv.pop()
+if output_format == 'visjs':
+    print CoursePathPredictor(ast.literal_eval(sys.stdin.read())).__visjs__()
+    sys.exit(0)
+if output_format == 'dot':
+    print CoursePathPredictor(ast.literal_eval(sys.stdin.read())).__dot__()
+    sys.exit(0)
+
+print "HELP: \t python CoursePathPredictor.py [visjs|dot]"
+sys.exit(1)
 
 
 
