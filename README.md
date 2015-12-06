@@ -14,6 +14,8 @@
 
 ### initialize database
 - `cd database`
+- `source venv/bin/activate` (if using virtualenv)
+- `pip install -r requirements.txt` (to make sure you have all dependencies)
 - `make reset-db`
 
 ## Setup Server (new)
