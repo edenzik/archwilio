@@ -98,6 +98,8 @@ class Node(dict):
         return hash(self['id'])
     def __eq__(self,other):
         return self.__hash__() == other.__hash__()
+    def __str__(self):
+        return self['id']
         
 class Edge(dict):
     def __init__(self, from_node, to_node):
@@ -109,6 +111,8 @@ class Edge(dict):
         return hash(self['from']['id'] + "|" + self['to']['id'])
     def __eq__(self,other):
         return self.__hash__() == other.__hash__()
+    def __str__(self):
+        return self['id']
 
 class CoursePathPredictor:
     def __init__(self,source):
