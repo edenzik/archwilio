@@ -9,7 +9,7 @@ var _ = require('lodash');
 router.get('/', function(req, res) {
   models.course.findAll(
     { attributes: [
-        'code', 'name', 'description', 'score', 
+        'code', 'name', 'description', 'score', 'keywords', 
         [sequelize.fn('count', sequelize.col('instance_id')), 'count']], 
       where: {
         code: {
@@ -19,7 +19,7 @@ router.get('/', function(req, res) {
           $gte: '1152'
         }
       },
-      group: ['code', 'name', 'description', 'score'],
+      group: ['code', 'name', 'description', 'score', 'keywords'],
       order: 'name ASC'
     }).then(function(courses) {
 
@@ -62,17 +62,20 @@ router.get('/rebuild_model', function(req, res) {
 
   models.course.findAll(
     { attributes: [
-        'code', 'name', 'description', 'score', 
+        'code', 'name', 'description', 'score', 'keywords', 
         [sequelize.fn('count', sequelize.col('instance_id')), 'count']], 
       where: {
         code: {
           $like: 'COSI%'
         },
+        score:{
+          $ne: null
+        },
         term: {
           $gte: '1152'
         }
       },
-      group: ['code', 'name', 'description', 'score'],
+      group: ['code', 'name', 'description', 'score', 'keywords'],
       order: 'name ASC'
     }).then(function(courses) {
 
