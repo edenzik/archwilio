@@ -94,6 +94,8 @@ class Node(dict):
         self['value'] = 10
     def __dot__(self):
         return "\"{0}\" [label=\"{1}\", style=filled, color={2}];".format(self['id'],self['label'],self['color'])
+    def __hash__(self):
+        return hash(self['id'])
         
 class Edge(dict):
     def __init__(self, from_node, to_node):
@@ -101,6 +103,8 @@ class Edge(dict):
         self['to'] = to_node
     def __dot__(self):
         return "\"{0}\" -> \"{1}\";".format(self['from']['id'],self['to']['id'])
+    def __hash__(self):
+        return hash(self['from']['id'] + "|" + self['to']['id'])
 
 class CoursePathPredictor:
     def __init__(self,source):
@@ -131,6 +135,8 @@ class CoursePathPredictor:
                     self.nodes.append(from_node)
                     self.nodes.append(to_node)
                     self.edges.append(edge)
+        self.edges = list(set(self.edges))
+        self.nodes = list(set(self.nodes))
 
     def __dot__(self):
         return "digraph {{ rankdir=\"LR\";\n {0} {1} }}".format("\n".join(map(Node.__dot__, self.nodes)),"\n".join(map(Edge.__dot__,self.edges)))
