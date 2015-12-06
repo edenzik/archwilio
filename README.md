@@ -16,7 +16,15 @@
 - `cd database`
 - `make reset-db`
 
-## Setup Server
+## Setup Server (new)
+## (ignore original server setup if you're using new instructions)
+- `cd app`
+- `npm install`
+- `start postgres`
+- `node node-server.js`
+- `visit localhost:8000`
+
+## Setup Server (original)
 - Install npm (nvm recommended tool for npm installation)
 - `cd app`
 - `npm install`
