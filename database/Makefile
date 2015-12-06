@@ -7,7 +7,7 @@ initialize-db:
 		psql --set "YEAR='$$(basename $$year .csv)'" --set "SOURCE='$(PWD)/data/enrollment/$$year'" -f load/enrollment.sql;	\
 	done
 	psql --set "SOURCE='$(PWD)/data/degrees.csv'" -f load/degrees.sql
-	psql --set "SOURCE='$(PWD)/data/training/josh.csv'" -f load/training.sql
+	psql --set "SOURCE='$(PWD)/data/training/easy2.csv'" -f load/training.sql
 	python load/prereq.py
 
 delete-db:

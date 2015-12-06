@@ -10,25 +10,23 @@ app.use(bodyParser.json());
 
 // respond with "hello world" when a GET request is made to the homepage
 app.post('/explore', function(req, res) {
-    console.log('boo');
-    // Replace double quotes with single quotes
-    var body = JSON.stringify(req.body).replace(/"/g, "'");
-    console.log('body in handler = ');
+    var body = req.body;
+    if (!body.indexOf(['-1']) >= 0) {
+        body.unshift(['-1'])
+    }
     console.log(body);
+    // Replace double quotes with single quotes
+    body = JSON.stringify(body).replace(/"/g, "'");
     getResponse(body).then(function(data) {
-        console.log('here');
         res.end(data);
     });
 });
 
 function getResponse(body) {
-    if(body.length == 0) {
-        body = "[[]]";
-    }
     var deferred = q.defer();
-    var cmd = 'echo "' + body + '" | python ../backend/course_selection_engine/CoursePathPredictor.py';
+    var cmd = 'echo "' + body + '" | python ../backend/course_selection_engine/CoursePathPredictor.py visjs';
     console.log('command = ' + cmd);
-    child_process.exec('echo "' + body + '" | python ../backend/course_selection_engine/CoursePathPredictor.py',
+    child_process.exec('echo "' + body + '" | python ../backend/course_selection_engine/CoursePathPredictor.py visjs',
     function (error, stdout, stderr) {
         deferred.resolve(stdout);
         console.log('stdout: ' + stdout);

@@ -11,7 +11,7 @@ import ast
 conn = psycopg2.connect("dbname=%s user=%s host=%s password=%s" % (os.environ.get('PGDATABASE'), os.environ.get('PGUSER'), os.environ.get('PGHOST'), os.environ.get('PGPASSWORD')))
 
 query_courses = """
-    SELECT course.term,course.instance_id, course.code,course.name 
+    SELECT course.term,course.instance_id, course.code,course.name, course.score 
     FROM course, term 
     WHERE course.code LIKE 'COSI%' AND 
     course.instance_id NOT LIKE '%-IND' AND 
@@ -37,6 +37,11 @@ for row in rows:
     courses += [row['instance_id']]
 
 courses = list(set(courses))
+
+course_to_score = defaultdict(str)
+course_to_score.default_factory = lambda: 0
+for row in rows:
+    course_to_score[row['instance_id']] = row['score']
 
 # Fetches prereqs
 
@@ -85,33 +90,43 @@ def find_node(nodes, value):
 
 
 class Node(dict):
-    def __init__(self,course,idx,label,color="lightyellow1"):
-        self['color'] = color
+    def __init__(self,course,idx,label,fill="gray",score=0):
+        self['fill'] = fill
         self['course'] = course
         self['idx'] = idx
-        self['id'] = "{0}|{1}".format(idx,label)
+        self['id'] = "{0}|{1}".format(idx,course)
         self['label'] = label
-        self['value'] = 10
+        self['value'] = score if score else 0
     def __dot__(self):
-        return "\"{0}\" [label=\"{1}\", style=filled, color={2}];".format(self['id'],self['label'],self['color'])
+        return "\"{0}\" [label=\"{1}\", style=filled, color={2}, fixedsize=true, width=5, height={3}];".format(self['id'],self['label'],self['fill'],str(int(self['value'])+1))
+    def __hash__(self):
+        return hash(self['id'])
+    def __eq__(self,other):
+        return self.__hash__() == other.__hash__()
+    def __repr__(self):
+        return self['id']
+    def to_JSON(self):
+        return "poop"
         
 class Edge(dict):
     def __init__(self, from_node, to_node):
-        self['from'] = from_node
-        self['to'] = to_node
+        self['from'] = from_node['id']
+        self['to'] = to_node['id']
     def __dot__(self):
-        return "\"{0}\" -> \"{1}\";".format(self['from']['id'],self['to']['id'])
+        return "\"{0}\" -> \"{1}\";".format(self['from'],self['to'])
+    def __hash__(self):
+        return hash(self['from'] + "|" + self['to'])
+    def __eq__(self,other):
+        return self.__hash__() == other.__hash__()
 
 class CoursePathPredictor:
     def __init__(self,source):
-        self.nodes = []
-        self.edges = []
+        self.nodes = set()
+        self.edges = set()
         self.predict(source)
 
     def predict(self,selected_path):
         suggested_path = selected_path + [[]]
-        output_str = []
-        atts_str = []
         for idx in range(len(suggested_path)):
             prior_courses = list(chain.from_iterable(selected_path[0:idx]))
             later_courses = list(chain.from_iterable(selected_path[idx+1:]))
@@ -125,20 +140,31 @@ class CoursePathPredictor:
             potential_courses = list(set(potential_courses))
             for prereq in suggested_path[idx-1]:
                 for course in potential_courses:
-                    from_node = Node(prereq,idx-1,course_to_name[prereq],"red")
-                    to_node = Node(course,idx,course_to_name[course])
+                    from_node = Node(prereq,idx-1,course_to_name[prereq],"red",course_to_score[prereq])
+                    to_node = Node(course,idx,course_to_name[course],"gray",course_to_score[course])
                     edge = Edge(from_node,to_node)
-                    self.nodes.append(from_node)
-                    self.nodes.append(to_node)
-                    self.edges.append(edge)
+                    self.nodes.add(from_node)
+                    self.nodes.add(to_node)
+                    self.edges.add(edge)
+        self.edges = list(self.edges)
+        self.nodes = list(self.nodes)
 
     def __dot__(self):
         return "digraph {{ rankdir=\"LR\";\n {0} {1} }}".format("\n".join(map(Node.__dot__, self.nodes)),"\n".join(map(Edge.__dot__,self.edges)))
 
-    def __str__(self):
+    def __visjs__(self):
         return json.dumps({"nodes":self.nodes,"edges":self.edges})
 
-print CoursePathPredictor(ast.literal_eval(sys.stdin.read())).__dot__()
+output_format = sys.argv.pop()
+if output_format == 'visjs':
+    print CoursePathPredictor(ast.literal_eval(sys.stdin.read())).__visjs__()
+    sys.exit(0)
+if output_format == 'dot':
+    print CoursePathPredictor(ast.literal_eval(sys.stdin.read())).__dot__()
+    sys.exit(0)
+
+print "HELP: \t python CoursePathPredictor.py [visjs|dot]"
+sys.exit(1)
 
 
 

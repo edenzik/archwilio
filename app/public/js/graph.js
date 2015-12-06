@@ -118,6 +118,10 @@ function getHierarchies(nodes) {
         if (!distMap[dist]) {
             distMap[dist] = [];
         }
+        // Strip pipe from ids
+        if (id.indexOf('|') >= 0) {
+            id = id.split('|')[1];
+        }
         distMap[dist].push(id);
     });
     return getValsSortedByKeys(distMap);
