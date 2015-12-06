@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Archwilio by edenzik</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Archwilio</h1>
+        <p>Dynamic Course Exploration</p>
+
+        <p class="view"><a href="https://github.com/edenzik/archwilio">View the Project on GitHub <small>edenzik/archwilio</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/edenzik/archwilio/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/edenzik/archwilio/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/edenzik/archwilio">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="cosi228a-course-selection-project" class="anchor" href="#cosi228a-course-selection-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>cosi228a Course selection project</h1>
+
+<h2>
+<a id="setup-databse" class="anchor" href="#setup-databse" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup databse</h2>
+
+<h3>
+<a id="create-a-new-pg-database-and-user-with-access" class="anchor" href="#create-a-new-pg-database-and-user-with-access" aria-hidden="true"><span class="octicon octicon-link"></span></a>create a new pg database and user with access</h3>
+
+<ul>
+<li><code>psql</code></li>
+<li><code>CREATE USER cosi228_development;</code></li>
+<li>
+<code>ALTER ROLE cosi228_development with SUPERUSER</code> (not necessary)</li>
+<li><code>CREATE DATABASE cosi228_development OWNER cosi228_development;</code></li>
+</ul>
+
+<h3>
+<a id="make-new-database-accessible-to-setup-scripts" class="anchor" href="#make-new-database-accessible-to-setup-scripts" aria-hidden="true"><span class="octicon octicon-link"></span></a>make new database accessible to setup scripts</h3>
+
+<ul>
+<li>export PGDATABASE=cosi228_development</li>
+<li>export PGHOST='127.0.0.1'</li>
+<li>export PGUSER=cosi228_development</li>
+</ul>
+
+<h3>
+<a id="initialize-database" class="anchor" href="#initialize-database" aria-hidden="true"><span class="octicon octicon-link"></span></a>initialize database</h3>
+
+<ul>
+<li><code>cd database</code></li>
+<li>
+<code>source venv/bin/activate</code> (if using virtualenv)</li>
+<li>
+<code>pip install -r requirements.txt</code> (to make sure you have all dependencies)</li>
+<li><code>make reset-db</code></li>
+</ul>
+
+<h2>
+<a id="setup-server-new" class="anchor" href="#setup-server-new" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup Server (new)</h2>
+
+<h2>
+<a id="ignore-original-server-setup-if-youre-using-new-instructions" class="anchor" href="#ignore-original-server-setup-if-youre-using-new-instructions" aria-hidden="true"><span class="octicon octicon-link"></span></a>(ignore original server setup if you're using new instructions)</h2>
+
+<ul>
+<li><code>cd app</code></li>
+<li><code>npm install</code></li>
+<li><code>start postgres</code></li>
+<li><code>node node-server.js</code></li>
+<li><code>visit localhost:8000</code></li>
+</ul>
+
+<h2>
+<a id="setup-server-original" class="anchor" href="#setup-server-original" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup Server (original)</h2>
+
+<ul>
+<li>Install npm (nvm recommended tool for npm installation)</li>
+<li><code>cd app</code></li>
+<li><code>npm install</code></li>
+<li><code>start postgres</code></li>
+<li><code>./bin/www</code></li>
+<li>visit localhost:3000</li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/edenzik">edenzik</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
