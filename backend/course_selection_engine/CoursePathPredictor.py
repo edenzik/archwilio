@@ -93,12 +93,12 @@ class Node(dict):
     def __init__(self,course,idx,label,fill="gray",score=0):
         self['fill'] = fill
         self['course'] = course
-        self['idx'] = idx
+        self['group'] = idx
         self['id'] = "{0}|{1}".format(idx,course)
         self['label'] = label
         self['value'] = score if score else 0
     def __dot__(self):
-        return "\"{0}\" [label=\"{1}\", style=filled, color={2}, fixedsize=true, width=5, height={3}];".format(self['id'],self['label'],self['fill'],str(int(self['value'])+1))
+        return "\"{0}\" [label=\"{1}\", style=filled, color={2} ];".format(self['id'],self['label'],self['fill'],1)
     def __hash__(self):
         return hash(self['id'])
     def __eq__(self,other):
@@ -109,11 +109,12 @@ class Node(dict):
         return "poop"
         
 class Edge(dict):
-    def __init__(self, from_node, to_node):
+    def __init__(self, from_node, to_node, score=0):
         self['from'] = from_node['id']
         self['to'] = to_node['id']
+        self['value'] = score if score else "N/A"
     def __dot__(self):
-        return "\"{0}\" -> \"{1}\";".format(self['from'],self['to'])
+        return "\"{0}\" -> \"{1}\" [label=\"{2}\"];".format(self['from'],self['to'],self['value'])
     def __hash__(self):
         return hash(self['from'] + "|" + self['to'])
     def __eq__(self,other):
@@ -142,7 +143,7 @@ class CoursePathPredictor:
                 for course in potential_courses:
                     from_node = Node(prereq,idx-1,course_to_name[prereq],"red",course_to_score[prereq])
                     to_node = Node(course,idx,course_to_name[course],"gray",course_to_score[course])
-                    edge = Edge(from_node,to_node)
+                    edge = Edge(from_node,to_node,course_to_score[course])
                     self.nodes.add(from_node)
                     self.nodes.add(to_node)
                     self.edges.add(edge)
