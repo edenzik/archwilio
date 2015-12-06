@@ -85,7 +85,7 @@ redrawALL();
 function generateGraph(selectNodes) {
     var hier = getHierarchies(selectNodes);
     $.ajax({
-        url:'http://localhost:8000/explore',
+        url:'http://localhost:3000/courses/explore',
         type:"POST",
         data: JSON.stringify(hier),
         contentType:"application/json; charset=utf-8",

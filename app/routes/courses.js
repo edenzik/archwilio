@@ -5,6 +5,8 @@ var sequelize = models.sequelize;
 var http = require('http');
 var request = require('request');
 var _ = require('lodash');
+var q = require('q');
+var child_process = require('child_process');
 
 router.get('/', function(req, res) {
   models.course.findAll(
@@ -92,5 +94,35 @@ router.get('/rebuild_model', function(req, res) {
         });
     });
 });
+
+router.post('/explore', function(req, res) {
+    var body = req.body;
+    if (!body.indexOf(['-1']) >= 0) {
+        body.unshift(['-1'])
+    }
+    // Replace double quotes with single quotes
+    // console.log(body);
+    body = JSON.stringify(body).replace(/"/g, "'");
+    getResponse(body).then(function(data) {
+        res.end(data);
+    });
+});
+
+function getResponse(body) {
+    console.log('test');
+    var deferred = q.defer();
+    var cmd = 'echo "' + body + '" | python ../backend/course_selection_engine/CoursePathPredictor.py visjs';
+    console.log('command = ' + cmd);
+    child_process.exec('echo "' + body + '" | python ../backend/course_selection_engine/CoursePathPredictor.py visjs',
+    function (error, stdout, stderr) {
+        deferred.resolve(stdout);
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+        if (error !== null) {
+            console.log('exec error: ' + error);
+        }
+    });
+    return deferred.promise;
+}
 
 module.exports = router;
