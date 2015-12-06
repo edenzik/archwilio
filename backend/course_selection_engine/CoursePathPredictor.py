@@ -43,6 +43,11 @@ course_to_score.default_factory = lambda: 0
 for row in rows:
     course_to_score[row['instance_id']] = row['score']
 
+course_to_code = defaultdict(str)
+course_to_code.default_factory = lambda: "UNKNOWN COURSE"
+for row in rows:
+    course_to_code[row['instance_id']] = row['code']
+course_to_code['-1'] = "ENROLLMENT"
 # Fetches prereqs
 
 query_prereqs = """
@@ -90,13 +95,14 @@ def find_node(nodes, value):
 
 
 class Node(dict):
-    def __init__(self,course,idx,label,fill="gray",score=0):
+    def __init__(self,course,idx,title,fill,score,code):
         self['fill'] = fill
         self['course'] = course
         self['group'] = idx
         self['id'] = "{0}|{1}".format(idx,course)
-        self['label'] = label
+        self['label'] = code
         self['value'] = score if score else 0
+        self['title'] = title
     def __dot__(self):
         return "\"{0}\" [label=\"{1}\", style=filled, color={2} ];".format(self['id'],self['label'],self['fill'],1)
     def __hash__(self):
@@ -141,8 +147,8 @@ class CoursePathPredictor:
             potential_courses = list(set(potential_courses))
             for prereq in suggested_path[idx-1]:
                 for course in potential_courses:
-                    from_node = Node(prereq,idx-1,course_to_name[prereq],"red",course_to_score[prereq])
-                    to_node = Node(course,idx,course_to_name[course],"gray",course_to_score[course])
+                    from_node = Node(prereq,idx-1,course_to_name[prereq],"red",course_to_score[prereq],course_to_code[prereq])
+                    to_node = Node(course,idx,course_to_name[course],"gray",course_to_score[course],course_to_code[course])
                     edge = Edge(from_node,to_node,course_to_score[course])
                     self.nodes.add(from_node)
                     self.nodes.add(to_node)
