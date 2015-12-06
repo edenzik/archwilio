@@ -103,43 +103,33 @@ def find_node(nodes, value):
 
 class CoursePathPredictor:
     def __init__(self,source):
-        new_source = []
-        for semester in source:
-            new_sem = []
-            for course in semester:
-                new_sem += [str(source).split("|")[1]]
-            new_source += new_sem
-        self.predict(new_source)
+        self.predict(source)
 
     def predict(self,selected_path):
-        selected_path = [['-1'],['001651'],['012337']]
         suggested_path = selected_path + [[]]
         print "digraph {"
         print "rankdir=LR;"
         output_str = []
+        atts_str = []
         for idx in range(len(suggested_path)):
             prior_courses = list(chain.from_iterable(selected_path[0:idx]))
             later_courses = list(chain.from_iterable(selected_path[idx+1:]))
+            potential_courses = list(suggested_path[idx])
             for prereq in prior_courses:
                 for course in prereq_to_course[prereq]:
                     if not meets_prereq(course, prior_courses): continue
                     if already_taken(course, prior_courses): continue
                     if will_take(course, later_courses): continue
-                    output_str+= ["\t\"" + str(idx) + "|" + course_to_name[prereq] + "\"->\"" + str(idx) + "|" + course_to_name[course] + "\";"]
-                    #suggested_path[idx] = suggested_path[idx] + [Node(str(idx) +"|" +  str(course),course_to_name[course])]
+                    potential_courses += [course]
+            potential_courses = list(set(potential_courses))
+            for prereq in suggested_path[idx-1]:
+                for course in potential_courses:
+                    atts_str+= ["\t\"" + str(idx-1) + "|" + course_to_name[prereq] + "\"[style=filled, fillcolor=red];\n"]
+                    output_str+= ["\t\"" + str(idx-1) + "|" + course_to_name[prereq] + "\"->\"" + str(idx) + "|" + course_to_name[course] + "\";\n"]
+        print "".join(set(atts_str))
         print "".join(set(output_str))
         print "}"
         sys.exit()
-        edges = []
-        for from_nodes,to_nodes in list(window(suggested_path,2)):
-            for from_node in from_nodes:
-                for to_node in to_nodes:
-                    edges += [Edge(from_node,to_node)]
-
-
-        nodes = list(chain.from_iterable(suggested_path))
-        self.edges = edges
-        self.nodes = nodes
 
     def __str__(self):
         return json.dumps({"nodes":self.nodes,"edges":self.edges})
