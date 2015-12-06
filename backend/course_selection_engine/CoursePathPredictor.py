@@ -85,34 +85,34 @@ def find_node(nodes, value):
 
 
 class Node(dict):
-    def __init__(self,course,idx,label,color="gray"):
-        self['color'] = color
+    def __init__(self,course,idx,label,fill="gray"):
+        self['fill'] = fill
         self['course'] = course
         self['idx'] = idx
         self['id'] = "{0}|{1}".format(idx,course)
         self['label'] = label
         self['value'] = 10
     def __dot__(self):
-        return "\"{0}\" [label=\"{1}\", style=filled, color={2}];".format(self['id'],self['label'],self['color'])
+        return "\"{0}\" [label=\"{1}\", style=filled, color={2}];".format(self['id'],self['label'],self['fill'])
     def __hash__(self):
         return hash(self['id'])
     def __eq__(self,other):
         return self.__hash__() == other.__hash__()
-    def __str__(self):
+    def __repr__(self):
         return self['id']
+    def to_JSON(self):
+        return "poop"
         
 class Edge(dict):
     def __init__(self, from_node, to_node):
-        self['from'] = from_node
-        self['to'] = to_node
+        self['from'] = from_node['id']
+        self['to'] = to_node['id']
     def __dot__(self):
-        return "\"{0}\" -> \"{1}\";".format(self['from']['id'],self['to']['id'])
+        return "\"{0}\" -> \"{1}\";".format(self['from'],self['to'])
     def __hash__(self):
-        return hash(self['from']['id'] + "|" + self['to']['id'])
+        return hash(self['from'] + "|" + self['to'])
     def __eq__(self,other):
         return self.__hash__() == other.__hash__()
-    def __str__(self):
-        return self['id']
 
 class CoursePathPredictor:
     def __init__(self,source):
@@ -141,6 +141,8 @@ class CoursePathPredictor:
                     self.nodes.add(from_node)
                     self.nodes.add(to_node)
                     self.edges.add(edge)
+        self.edges = list(self.edges)
+        self.nodes = list(self.nodes)
 
     def __dot__(self):
         return "digraph {{ rankdir=\"LR\";\n {0} {1} }}".format("\n".join(map(Node.__dot__, self.nodes)),"\n".join(map(Edge.__dot__,self.edges)))
