@@ -85,7 +85,7 @@ def find_node(nodes, value):
 
 
 class Node(dict):
-    def __init__(self,course,idx,label,color="lightyellow1"):
+    def __init__(self,course,idx,label,color="gray"):
         self['color'] = color
         self['course'] = course
         self['idx'] = idx
@@ -112,14 +112,12 @@ class Edge(dict):
 
 class CoursePathPredictor:
     def __init__(self,source):
-        self.nodes = []
-        self.edges = []
+        self.nodes = set()
+        self.edges = set()
         self.predict(source)
 
     def predict(self,selected_path):
         suggested_path = selected_path + [[]]
-        output_str = []
-        atts_str = []
         for idx in range(len(suggested_path)):
             prior_courses = list(chain.from_iterable(selected_path[0:idx]))
             later_courses = list(chain.from_iterable(selected_path[idx+1:]))
@@ -136,11 +134,9 @@ class CoursePathPredictor:
                     from_node = Node(prereq,idx-1,course_to_name[prereq],"red")
                     to_node = Node(course,idx,course_to_name[course])
                     edge = Edge(from_node,to_node)
-                    self.nodes.append(from_node)
-                    self.nodes.append(to_node)
-                    self.edges.append(edge)
-        self.edges = list(set(self.edges))
-        self.nodes = list(set(self.nodes))
+                    self.nodes.add(from_node)
+                    self.nodes.add(to_node)
+                    self.edges.add(edge)
 
     def __dot__(self):
         return "digraph {{ rankdir=\"LR\";\n {0} {1} }}".format("\n".join(map(Node.__dot__, self.nodes)),"\n".join(map(Edge.__dot__,self.edges)))
