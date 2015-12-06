@@ -8,7 +8,7 @@ initialize-db:
 	done
 	psql --set "SOURCE='$(PWD)/data/degrees.csv'" -f load/degrees.sql
 	psql --set "SOURCE='$(PWD)/data/training/josh.csv'" -f load/training.sql
-	load/prereq.py
+	python load/prereq.py
 
 delete-db:
 	dropdb $(PGDATABASE)
