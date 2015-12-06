@@ -31,7 +31,6 @@ ClassPathExploration.controller('CourseCtrl', function ($scope, $http, $modal, $
 
 ClassPathExploration.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, $http, course) {
   $scope.course = course;
-
   $scope.train = function() {
     /*get element value in modal */
     var rating;
