@@ -89,7 +89,7 @@ class Node(dict):
         self['color'] = color
         self['course'] = course
         self['idx'] = idx
-        self['id'] = "{0}|{1}".format(idx,label)
+        self['id'] = "{0}|{1}".format(idx,course)
         self['label'] = label
         self['value'] = 10
     def __dot__(self):
