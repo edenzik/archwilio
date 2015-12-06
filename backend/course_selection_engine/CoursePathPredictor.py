@@ -96,6 +96,8 @@ class Node(dict):
         return "\"{0}\" [label=\"{1}\", style=filled, color={2}];".format(self['id'],self['label'],self['color'])
     def __hash__(self):
         return hash(self['id'])
+    def __eq__(self,other):
+        return self.__hash__() == other.__hash__()
         
 class Edge(dict):
     def __init__(self, from_node, to_node):
@@ -105,6 +107,8 @@ class Edge(dict):
         return "\"{0}\" -> \"{1}\";".format(self['from']['id'],self['to']['id'])
     def __hash__(self):
         return hash(self['from']['id'] + "|" + self['to']['id'])
+    def __eq__(self,other):
+        return self.__hash__() == other.__hash__()
 
 class CoursePathPredictor:
     def __init__(self,source):
